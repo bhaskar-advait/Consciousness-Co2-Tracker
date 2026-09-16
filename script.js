@@ -11,75 +11,223 @@ const questions = [
     "Do you believe philosophy can help a person understand life and oneself?"
 ];
 
-let currentQuestion = 0;
-let totalScore = 0;
+const optionNames = [
+    "Strongly Agree",
+    "Agree",
+    "Neutral",
+    "Disagree",
+    "Strongly Disagree"
+];
 
 const scores = [-4, -2, 0, 2, 4];
 
+let currentQuestion = 0;
+let answers = Array(questions.length).fill(null);
+
+
+// START ASSESSMENT
+
 function startAssessment() {
     currentQuestion = 0;
-    totalScore = 0;
+    answers = Array(questions.length).fill(null);
     showQuestion();
 }
 
+
+// SHOW QUESTION
+
 function showQuestion() {
 
-    document.querySelector(".hero").innerHTML = `
-        <p>Question ${currentQuestion + 1} of ${questions.length}</p>
+    let selected = answers[currentQuestion];
 
-        <h2>${questions[currentQuestion]}</h2>
+    let optionsHTML = "";
+
+    for (let i = 0; i < optionNames.length; i++) {
+
+        let checked = selected === i ? "checked" : "";
+
+        optionsHTML += `
+            <label class="option">
+                <input 
+                    type="radio" 
+                    name="answer"
+                    value="${i}"
+                    ${checked}
+                    onchange="saveAnswer(${i})"
+                >
+                ${optionNames[i]}
+            </label>
+        `;
+    }
+
+
+    document.querySelector(".hero").innerHTML = `
+
+        <p>
+            Question ${currentQuestion + 1} of ${questions.length}
+        </p>
+
+        <h2>
+            ${questions[currentQuestion]}
+        </h2>
 
         <div class="options">
+            ${optionsHTML}
+        </div>
 
-            <button onclick="selectAnswer(0)">
-                Strongly Agree
-            </button>
+        <div class="navigation">
 
-            <button onclick="selectAnswer(1)">
-                Agree
-            </button>
+            ${
+                currentQuestion > 0
+                ? `<button onclick="previousQuestion()">Previous</button>`
+                : ""
+            }
 
-            <button onclick="selectAnswer(2)">
-                Neutral
-            </button>
-
-            <button onclick="selectAnswer(3)">
-                Disagree
-            </button>
-
-            <button onclick="selectAnswer(4)">
-                Strongly Disagree
-            </button>
+            ${
+                currentQuestion < questions.length - 1
+                ? `<button onclick="nextQuestion()">Next</button>`
+                : `<button onclick="showReview()">Review Answers</button>`
+            }
 
         </div>
     `;
 }
 
-function selectAnswer(optionNumber) {
 
-    totalScore += scores[optionNumber];
+// SAVE ANSWER
+
+function saveAnswer(optionNumber) {
+    answers[currentQuestion] = optionNumber;
+}
+
+
+// NEXT QUESTION
+
+function nextQuestion() {
+
+    if (answers[currentQuestion] === null) {
+        alert("Please select an answer first.");
+        return;
+    }
 
     currentQuestion++;
 
-    if (currentQuestion < questions.length) {
+    showQuestion();
+}
+
+
+// PREVIOUS QUESTION
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+        currentQuestion--;
         showQuestion();
-    } else {
-        showResult();
     }
 }
 
-function showResult() {
 
-    let consciousnessScore =
-        Math.round(((totalScore + 40) / 80) * 100);
+// REVIEW ANSWERS
+
+function showReview() {
+
+    let unanswered = answers.findIndex(answer => answer === null);
+
+    if (unanswered !== -1) {
+
+        alert(
+            `Please answer Question ${unanswered + 1} before reviewing.`
+        );
+
+        currentQuestion = unanswered;
+        showQuestion();
+
+        return;
+    }
+
+
+    let reviewHTML = "";
+
+    for (let i = 0; i < questions.length; i++) {
+
+        reviewHTML += `
+            <div class="review-question">
+
+                <h3>Question ${i + 1}</h3>
+
+                <p>${questions[i]}</p>
+
+                <strong>
+                    Your answer: ${optionNames[answers[i]]}
+                </strong>
+
+                <button onclick="editQuestion(${i})">
+                    Edit Answer
+                </button>
+
+            </div>
+        `;
+    }
+
 
     document.querySelector(".hero").innerHTML = `
+
+        <h2>Review Your Answers</h2>
+
+        <p>
+            Please check your answers carefully before submitting.
+        </p>
+
+        ${reviewHTML}
+
+        <button onclick="finalSubmit()">
+            Final Submit
+        </button>
+
+    `;
+}
+
+
+// EDIT QUESTION
+
+function editQuestion(questionNumber) {
+
+    currentQuestion = questionNumber;
+
+    showQuestion();
+}
+
+
+// FINAL SUBMIT
+
+function finalSubmit() {
+
+    let rawScore = 0;
+
+    for (let i = 0; i < answers.length; i++) {
+
+        rawScore += scores[answers[i]];
+
+    }
+
+
+    let consciousnessScore =
+        Math.round(((rawScore + 40) / 80) * 100);
+
+
+    document.querySelector(".hero").innerHTML = `
+
         <h2>Assessment Completed!</h2>
 
         <h3>Your Consciousness Score</h3>
 
-        <p>${consciousnessScore} / 100</p>
+        <p style="font-size: 40px;">
+            ${consciousnessScore} / 100
+        </p>
 
-        <p>Raw Score: ${totalScore}</p>
+        <p>
+            Thank you for reflecting on your answers.
+        </p>
+
     `;
 }
