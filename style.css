@@ -574,4 +574,571 @@ button:focus-visible,
 
         font-size: 14px;
     }
+}  
+
+
+
+/* =========================================================
+   RESULT PAGE — PREMIUM DESIGN
+   ========================================================= */
+
+.result-container {
+    min-height: 100vh;
+    padding: 50px 20px 70px;
+    background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.12), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.10), transparent 35%),
+        #f8fafc;
+    color: #172033;
+    font-family: inherit;
+}
+
+.result-header {
+    max-width: 950px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.result-header h1 {
+    margin: 0 0 12px;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.result-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   SCORE CARD
+   ========================================================= */
+
+.score-card {
+    max-width: 520px;
+    margin: 0 auto 22px;
+    padding: 35px 25px;
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: 28px;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.10),
+        0 5px 15px rgba(15, 23, 42, 0.05);
+}
+
+.score-number {
+    width: 155px;
+    height: 155px;
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 42px;
+    font-weight: 800;
+
+    background: white;
+    border: 10px solid #7c3aed;
+
+    box-shadow:
+        0 10px 35px rgba(124, 58, 237, 0.20);
+}
+
+.score-label {
+    font-size: 25px;
+    font-weight: 750;
+    margin-bottom: 8px;
+}
+
+.raw-score {
+    font-size: 15px;
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   NOTE
+   ========================================================= */
+
+.result-note {
+    max-width: 850px;
+    margin: 0 auto 40px;
+    padding: 15px 20px;
+
+    text-align: center;
+
+    background: rgba(124, 58, 237, 0.07);
+    border: 1px solid rgba(124, 58, 237, 0.12);
+    border-radius: 14px;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   QUESTION REVIEW
+   ========================================================= */
+
+.answer-review {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.answer-review > h2 {
+    margin: 0 0 25px;
+    font-size: 28px;
+    text-align: center;
+}
+
+
+.review-card {
+    position: relative;
+
+    margin-bottom: 25px;
+    padding: 28px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 22px;
+
+    box-shadow:
+        0 12px 35px rgba(15, 23, 42, 0.07);
+
+    overflow: hidden;
+}
+
+
+/* Green / Red top accent */
+
+.review-card.review-correct {
+    border-left: 6px solid #16a34a;
+}
+
+.review-card.review-wrong {
+    border-left: 6px solid #dc2626;
+}
+
+
+.review-question-number {
+    display: inline-block;
+
+    margin-bottom: 12px;
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    background: #f1f5f9;
+    color: #475569;
+}
+
+
+.review-card h3 {
+    margin: 5px 0 22px;
+
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SELECTED ANSWER
+   ========================================================= */
+
+.selected-answer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    margin-bottom: 16px;
+    padding: 14px 16px;
+
+    background: #f8fafc;
+    border-radius: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RIGHT / WRONG STATUS
+   ========================================================= */
+
+.review-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 20px;
+    padding: 9px 15px;
+
+    border-radius: 30px;
+
+    font-weight: 750;
+    font-size: 14px;
+}
+
+.review-correct .review-status {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.review-wrong .review-status {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.status-icon {
+    width: 25px;
+    height: 25px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.review-correct .status-icon {
+    background: #16a34a;
+    color: white;
+}
+
+.review-wrong .status-icon {
+    background: #dc2626;
+    color: white;
+}
+
+
+/* =========================================================
+   WHY BOX
+   ========================================================= */
+
+.why-box {
+    margin: 15px 0;
+    padding: 18px 20px;
+
+    background: #f8fafc;
+    border-radius: 15px;
+
+    border: 1px solid #e2e8f0;
+}
+
+.why-box h4 {
+    margin: 0 0 8px;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.why-box p {
+    margin: 0;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MORE CONSCIOUS OPTION
+   ========================================================= */
+
+.more-conscious-answer {
+    margin: 16px 0;
+    padding: 15px 18px;
+
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.20);
+
+    border-radius: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   QUOTE
+   ========================================================= */
+
+.quote-box {
+    margin-top: 18px;
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 58, 237, 0.07),
+            rgba(124, 58, 237, 0.025)
+        );
+
+    border-radius: 16px;
+    border-left: 4px solid #7c3aed;
+}
+
+.quote-text {
+    font-size: 17px;
+    line-height: 1.7;
+    font-style: italic;
+}
+
+.quote-person {
+    margin-top: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SOURCE
+   ========================================================= */
+
+.source-box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    margin-top: 14px;
+
+    font-size: 13px;
+}
+
+.source-icon {
+    font-size: 15px;
+}
+
+.source-box a {
+    color: #6d28d9;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.source-box a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   PERSONAL EXPLANATION
+   ========================================================= */
+
+.personal-explanation {
+    margin-top: 18px;
+    padding: 20px;
+
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+
+    border-radius: 16px;
+}
+
+.personal-explanation h4 {
+    margin: 0 0 10px;
+
+    font-size: 15px;
+}
+
+.personal-explanation p {
+    margin: 0;
+
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   FINAL MESSAGE
+   ========================================================= */
+
+.final-message {
+    max-width: 850px;
+    margin: 50px auto 30px;
+
+    padding: 30px 25px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 58, 237, 0.10),
+            rgba(16, 185, 129, 0.08)
+        );
+
+    border-radius: 22px;
+}
+
+.final-message h2 {
+    margin: 0;
+
+    font-size: 23px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   GITA COMMUNITY CTA
+   ========================================================= */
+
+.gita-community {
+    max-width: 700px;
+    margin: 30px auto;
+
+    padding: 32px 25px;
+
+    text-align: center;
+
+    background: white;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.gita-community h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+}
+
+.gita-community p {
+    margin: 0 0 22px;
+    line-height: 1.6;
+}
+
+.gita-community a {
+    display: inline-block;
+
+    padding: 13px 22px;
+
+    border-radius: 12px;
+
+    background: #7c3aed;
+    color: white;
+
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gita-community a:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+
+/* =========================================================
+   RESULT BUTTON
+   ========================================================= */
+
+.result-actions {
+    max-width: 700px;
+    margin: 30px auto 0;
+
+    text-align: center;
+}
+
+.result-actions button {
+    padding: 13px 24px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #172033;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.result-actions button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .result-container {
+        padding: 30px 14px 50px;
+    }
+
+    .result-header h1 {
+        font-size: 28px;
+    }
+
+    .result-header h2 {
+        font-size: 18px;
+    }
+
+    .score-card {
+        padding: 28px 18px;
+        border-radius: 22px;
+    }
+
+    .score-number {
+        width: 125px;
+        height: 125px;
+
+        font-size: 34px;
+
+        border-width: 8px;
+    }
+
+    .score-label {
+        font-size: 21px;
+    }
+
+    .answer-review > h2 {
+        font-size: 23px;
+    }
+
+    .review-card {
+        padding: 20px 17px;
+        border-radius: 18px;
+    }
+
+    .review-card h3 {
+        font-size: 18px;
+    }
+
+    .quote-text {
+        font-size: 15px;
+    }
+
+    .final-message h2 {
+        font-size: 19px;
+    }
+
+    .gita-community {
+        padding: 25px 18px;
+    }
 }
