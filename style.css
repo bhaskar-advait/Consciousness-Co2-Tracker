@@ -1142,3 +1142,47 @@ button:focus-visible,
         padding: 25px 18px;
     }
 }
+
+
+
+
+/* Selected option */
+
+.assessment-container .option-button {
+    transition: all 0.2s ease;
+}
+
+.assessment-container .option-button.selected {
+    border: 2px solid #2563eb !important;
+    background: rgba(37, 99, 235, 0.10) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+    position: relative;
+}
+
+.assessment-container .option-button.selected .option-letter {
+    background: #2563eb !important;
+    color: white !important;
+}
+
+.assessment-container .option-button.selected::after {
+    content: "✓";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 14px;
+    font-weight: bold;
+}
