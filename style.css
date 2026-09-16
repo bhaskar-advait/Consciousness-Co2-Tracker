@@ -170,3 +170,79 @@ footer p {
         font-size: 15px;
     }
 }
+
+/* ASSESSMENT OPTIONS */
+
+.options {
+    margin: 30px auto;
+    max-width: 500px;
+}
+
+.option {
+    display: block;
+    text-align: left;
+    padding: 16px 20px;
+    margin: 12px 0;
+
+    background: #f8f3e7;
+    border: 1px solid #d6c69b;
+    border-radius: 12px;
+
+    cursor: pointer;
+    font-size: 17px;
+
+    transition: 0.2s ease;
+}
+
+.option:hover {
+    background: #eee5cf;
+    transform: translateX(3px);
+}
+
+.option input {
+    margin-right: 12px;
+    accent-color: #315c45;
+}
+
+
+/* NAVIGATION */
+
+.navigation {
+    margin-top: 30px;
+}
+
+.navigation button {
+    display: inline-block;
+    width: auto;
+    min-width: 130px;
+    margin: 8px;
+}
+
+
+/* REVIEW */
+
+.review-question {
+    text-align: left;
+    margin: 20px 0;
+    padding: 22px;
+
+    background: #f8f3e7;
+    border-left: 4px solid #b88935;
+    border-radius: 12px;
+}
+
+.review-question h3 {
+    margin-top: 0;
+    color: #315c45;
+}
+
+.review-question p {
+    margin-bottom: 10px;
+}
+
+.review-question button {
+    width: auto;
+    padding: 10px 18px;
+    margin: 12px 0 0;
+    font-size: 14px;
+}
