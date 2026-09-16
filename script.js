@@ -845,12 +845,14 @@ function finalSubmit() {
     }
 
 
-    // RAW SCORE RANGE = -40 TO +40
+    // ======================================
+    // CONSCIOUSNESS SCORE
+    // Raw Score: -40 to +40
+    // Percentage: -100% to +100%
+    // ======================================
 
-    let consciousnessScore =
-        Math.round(
-            ((rawScore + 40) / 80) * 100
-        );
+    const consciousnessScore =
+        Math.round((rawScore / 40) * 100);
 
 
     const language = selectedLanguage;
@@ -859,40 +861,47 @@ function finalSubmit() {
     let level = "";
 
 
-    if (consciousnessScore >= 80) {
+    if (consciousnessScore >= 90) {
 
         level =
             language === "hi"
             ? "उच्च जागरूकता"
             : "High Awareness";
 
-    } else if (consciousnessScore >= 60) {
+    } else if (consciousnessScore >= 70) {
+
+        level =
+            language === "hi"
+            ? "बहुत अच्छी जागरूकता"
+            : "Very Good Awareness";
+
+    } else if (consciousnessScore >= 50) {
 
         level =
             language === "hi"
             ? "अच्छी जागरूकता"
             : "Good Awareness";
 
-    } else if (consciousnessScore >= 40) {
+    } else if (consciousnessScore >= 30) {
 
         level =
             language === "hi"
-            ? "मध्यम जागरूकता"
-            : "Moderate Awareness";
+            ? "सुधार की जरूरत है"
+            : "Needs Improvement";
 
-    } else if (consciousnessScore >= 20) {
+    } else if (consciousnessScore >= 0) {
 
         level =
             language === "hi"
-            ? "कम जागरूकता"
-            : "Low Awareness";
+            ? "बहुत सुधार चाहिए"
+            : "Significant Improvement Needed";
 
     } else {
 
         level =
             language === "hi"
-            ? "अधिक आत्मचिंतन की आवश्यकता"
-            : "More Self-Reflection Needed";
+            ? "अचेतन"
+            : "Unconscious";
     }
 
 
@@ -915,7 +924,7 @@ function finalSubmit() {
         </h3>
 
         <p style="font-size: 40px;">
-            ${consciousnessScore} / 100
+            ${consciousnessScore}%
         </p>
 
         <h3>
@@ -942,12 +951,12 @@ function finalSubmit() {
         if (language === "hi") {
 
             resultVoice =
-                `मूल्यांकन पूरा हुआ। आपका Consciousness Score ${consciousnessScore} है। ${level}।`;
+                `मूल्यांकन पूरा हुआ। आपका Consciousness Score ${consciousnessScore} प्रतिशत है। ${level}।`;
 
         } else {
 
             resultVoice =
-                `Assessment completed. Your Consciousness Score is ${consciousnessScore}. ${level}.`;
+                `Assessment completed. Your Consciousness Score is ${consciousnessScore} percent. ${level}.`;
         }
 
 
