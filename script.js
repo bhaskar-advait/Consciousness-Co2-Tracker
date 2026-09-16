@@ -1,16 +1,33 @@
-// =====================================================
-// CONSCIOUSNESS WITH BHASKAR
-// FINAL SCRIPT
-// =====================================================
+/* =========================================================
+   CONSCIOUSNESS WITH BHASKAR
+   Complete script.js
+   ========================================================= */
+
+let currentLanguage = "en";
+let voiceMode = false;
+let voiceLanguage = "en";
+
+let currentQuestion = 0;
+let answers = Array(10).fill(null);
+
+let voices = [];
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
 
 const questions = [
 
-    // =================================================
-    // Q1
-    // =================================================
+    /* -----------------------------------------------------
+       Q1
+    ----------------------------------------------------- */
     {
-        en: "Do you often compare yourself with others?",
-        hi: "क्या आप अक्सर दूसरों से अपनी तुलना करते हैं?",
+        id: 1,
+
+        question: {
+            en: "Do you often compare yourself with others?",
+            hi: "क्या आप अक्सर दूसरों से अपनी तुलना करते हैं?"
+        },
 
         options: {
             en: [
@@ -20,35 +37,65 @@ const questions = [
                 "Disagree",
                 "Strongly Disagree"
             ],
+
             hi: [
-                "बिल्कुल सहमत",
+                "पूरी तरह सहमत",
                 "सहमत",
                 "तटस्थ",
                 "असहमत",
-                "बिल्कुल असहमत"
+                "पूरी तरह असहमत"
             ]
         },
 
-        scores: [-4, -2, 0, 2, 4]
+        scores: [-4, -2, 0, 2, 4],
+
+        bestOption: 4,
+
+        why: {
+            en: [
+                "Constant comparison can keep attention trapped in what others are doing instead of understanding oneself.",
+                "Comparison can still keep the mind dependent on others for self-evaluation.",
+                "This neither clearly accepts nor rejects the habit of comparison.",
+                "Reducing comparison moves attention more towards self-understanding.",
+                "This option rejects comparison and directs attention towards understanding oneself."
+            ],
+
+            hi: [
+                "लगातार तुलना करने से ध्यान स्वयं को समझने के बजाय दूसरों पर अटक सकता है।",
+                "तुलना मन को अपने मूल्यांकन के लिए दूसरों पर निर्भर रख सकती है।",
+                "यह विकल्प तुलना करने की आदत को न स्पष्ट रूप से स्वीकार करता है, न अस्वीकार।",
+                "तुलना को कम करना ध्यान को स्वयं को समझने की ओर ले जाता है।",
+                "यह विकल्प तुलना को अस्वीकार करता है और ध्यान स्वयं को समझने की ओर ले जाता है।"
+            ]
+        },
+
+        quote: {
+            en: "Comparison often leads only to superficial changes.",
+            hi: "तुलना अक्सर केवल सतही बदलावों तक ले जाती है।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/on-youtube/ecf4b3c"
+        }
     },
 
 
-    // =================================================
-    // Q2 — MY LIFE, MY CHOICE
-    // =================================================
+    /* -----------------------------------------------------
+       Q2
+    ----------------------------------------------------- */
     {
-        en: "\"My Life, My Choice\" — but until when?",
+        id: 2,
 
-        hi: "“मेरी ज़िंदगी, मेरी पसंद” — लेकिन कब तक?",
+        question: {
+            en: "\"My Life, My Choice\" — but until when?",
+            hi: "\"मेरी ज़िंदगी, मेरी पसंद\" — लेकिन कब तक?"
+        },
 
         options: {
-
             en: [
-                "It is my life and my decisions. I should have complete freedom to live according to my choice.",
-                "I should have freedom to live according to my choice as long as it does not harm others — such as the environment, animals, human health, human rights, etc.",
-                "What should we say? Look after yourself. Whatever others do is their matter.",
+                "It is my life and my decisions. I should have complete freedom to live according to my choices.",
+                "I should have freedom to live according to my choices as long as it does not harm others — such as the environment, animals, human health, human rights, etc.",
+                "Why should we care? I should live my way and others can do whatever they want.",
                 "I do not want to answer because questioning my beliefs may hurt my ego.",
-                "Everyone should have the freedom to live according to their own way."
+                "Everyone should have freedom to live according to their own choices."
             ],
 
             hi: [
@@ -60,16 +107,47 @@ const questions = [
             ]
         },
 
-        scores: [-4, 4, -4, 2, -2]
+        scores: [-4, 4, -4, 2, -2],
+
+        bestOption: 1,
+
+        why: {
+            en: [
+                "Personal freedom does not automatically mean that every consequence of a choice is acceptable.",
+                "This option recognises personal freedom while also considering the rights and freedom of others.",
+                "Ignoring the effects of one's choices on others removes responsibility from the idea of freedom.",
+                "Refusing to question one's beliefs can itself become a barrier to understanding freedom.",
+                "Freedom is important, but this statement does not address the possible impact of one's choices on others."
+            ],
+
+            hi: [
+                "व्यक्तिगत स्वतंत्रता का अर्थ यह अपने-आप नहीं है कि किसी भी चुनाव का हर परिणाम स्वीकार्य हो।",
+                "यह विकल्प व्यक्तिगत स्वतंत्रता के साथ-साथ दूसरों के अधिकार और स्वतंत्रता को भी ध्यान में रखता है।",
+                "अपने चुनावों के प्रभाव को पूरी तरह नज़रअंदाज़ करना स्वतंत्रता से जिम्मेदारी को अलग कर देता है।",
+                "अपने विश्वासों पर प्रश्न करने से इनकार करना स्वयं स्वतंत्रता को समझने में बाधा बन सकता है।",
+                "स्वतंत्रता महत्वपूर्ण है, लेकिन यह कथन अपने चुनावों के दूसरों पर प्रभाव की बात नहीं करता।"
+            ]
+        },
+
+        quote: {
+            en: "Freedom is to be free of both—firstly others and secondly, and more importantly, yourself.",
+            hi: "स्वतंत्रता का अर्थ दूसरों से और उससे भी अधिक महत्वपूर्ण रूप से स्वयं से मुक्त होना है।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/en/articles/how-to-move-to-freedom-from-slavery-1_6fd7036"
+        }
     },
 
 
-    // =================================================
-    // Q3
-    // =================================================
+    /* -----------------------------------------------------
+       Q3
+    ----------------------------------------------------- */
     {
-        en: "Are you willing to change your opinion when you discover that you were wrong?",
-        hi: "जब आपको पता चलता है कि आप गलत थे, क्या आप अपनी सोच बदलने के लिए तैयार रहते हैं?",
+        id: 3,
+
+        question: {
+            en: "Are you willing to change your opinion when you discover that you were wrong?",
+            hi: "जब आपको पता चलता है कि आप गलत थे, क्या आप अपनी सोच बदलने के लिए तैयार रहते हैं?"
+        },
 
         options: {
             en: [
@@ -79,25 +157,57 @@ const questions = [
                 "Disagree",
                 "Strongly Disagree"
             ],
+
             hi: [
-                "बिल्कुल सहमत",
+                "पूरी तरह सहमत",
                 "सहमत",
                 "तटस्थ",
                 "असहमत",
-                "बिल्कुल असहमत"
+                "पूरी तरह असहमत"
             ]
         },
 
-        scores: [4, 2, 0, -2, -4]
+        scores: [4, 2, 0, -2, -4],
+
+        bestOption: 0,
+
+        why: {
+            en: [
+                "Being willing to examine and change one's view when it is shown to be wrong requires openness to inquiry.",
+                "Some openness is present, but it is weaker than a clear willingness to change when wrong.",
+                "This leaves the attitude towards changing one's view undecided.",
+                "Refusing to change after recognising an error can keep a mistaken belief intact.",
+                "Rejecting change even after discovering an error places the belief above inquiry."
+            ],
+
+            hi: [
+                "गलत होने का पता चलने पर अपनी सोच को जाँचने और बदलने की तैयारी प्रश्न करने की openness दिखाती है।",
+                "कुछ openness दिखाई देती है, लेकिन गलत साबित होने पर बदलने की स्पष्ट तैयारी से कम।",
+                "यह सोच बदलने के प्रति स्पष्ट रुख नहीं बताता।",
+                "गलती समझ आने के बाद भी सोच न बदलना गलत विश्वास को बनाए रख सकता है।",
+                "गलती पता चलने के बाद भी बदलाव को अस्वीकार करना विश्वास को प्रश्न से ऊपर रखता है।"
+            ]
+        },
+
+        quote: {
+            en: "How do I know? Just by enquiring; just by seeing.",
+            hi: "मैं कैसे जानूँ? बस प्रश्न करके; बस देखकर।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/en/articles/in-the-middle-of-conditioning-how-do-i-get-real-freedom-with-youth-1_ab39fae"
+        }
     },
 
 
-    // =================================================
-    // Q4
-    // =================================================
+    /* -----------------------------------------------------
+       Q4
+    ----------------------------------------------------- */
     {
-        en: "Do you usually question what you hear instead of blindly believing it?",
-        hi: "क्या आप सुनी हुई बातों पर आँख बंद करके विश्वास करने के बजाय उन पर प्रश्न करते हैं?",
+        id: 4,
+
+        question: {
+            en: "Do you usually question what you hear instead of blindly believing it?",
+            hi: "क्या आप सुनी हुई बातों पर आँख बंद करके विश्वास करने के बजाय उन पर प्रश्न करते हैं?"
+        },
 
         options: {
             en: [
@@ -107,91 +217,129 @@ const questions = [
                 "Disagree",
                 "Strongly Disagree"
             ],
+
             hi: [
-                "बिल्कुल सहमत",
+                "पूरी तरह सहमत",
                 "सहमत",
                 "तटस्थ",
                 "असहमत",
-                "बिल्कुल असहमत"
+                "पूरी तरह असहमत"
             ]
         },
 
-        scores: [4, 2, 0, -2, -4]
+        scores: [4, 2, 0, -2, -4],
+
+        bestOption: 0,
+
+        why: {
+            en: [
+                "Questioning what you hear instead of accepting it blindly encourages inquiry and examination.",
+                "This shows some willingness to question, though not consistently.",
+                "This does not clearly show whether you question or blindly accept information.",
+                "Accepting information without enough questioning can leave beliefs unexamined.",
+                "Blindly accepting what you hear leaves little space for inquiry."
+            ],
+
+            hi: [
+                "सुनी हुई बात को आँख बंद करके स्वीकार करने के बजाय प्रश्न करना जाँच और समझ की ओर ले जाता है।",
+                "यह कुछ हद तक प्रश्न करने की इच्छा दिखाता है, लेकिन लगातार नहीं।",
+                "यह स्पष्ट नहीं करता कि आप प्रश्न करते हैं या बिना जाँच स्वीकार करते हैं।",
+                "पर्याप्त प्रश्न किए बिना बात स्वीकार करने से विश्वास बिना जाँच के रह सकता है।",
+                "सुनी हुई बात को आँख बंद करके स्वीकार करना प्रश्न करने की जगह बहुत कम छोड़ता है।"
+            ]
+        },
+
+        quote: {
+            en: "How do I know? Just by enquiring; just by seeing.",
+            hi: "मैं कैसे जानूँ? बस प्रश्न करके; बस देखकर।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/en/articles/in-the-middle-of-conditioning-how-do-i-get-real-freedom-with-youth-1_ab39fae"
+        }
     },
 
 
-    // =================================================
-    // Q5 — MEAT QUESTION
-    // =================================================
+    /* -----------------------------------------------------
+       Q5
+    ----------------------------------------------------- */
     {
-        en: "What would you say about people who eat meat and people who, even knowing that something wrong is happening, still remain silent?",
+        id: 5,
 
-        hi: "जो लोग मांस खाते हैं और जो लोग यह जानते हुए भी कि यह गलत हो रहा है, फिर भी चुप रहते हैं—आप उनके बारे में क्या कहना चाहेंगे?",
+        question: {
+            en: "What would you say about people who eat meat and people who, even knowing that something wrong is happening, still remain silent?",
+
+            hi: "जो लोग मांस खाते हैं और जो लोग यह जानते हुए भी कि यह गलत हो रहा है, फिर भी चुप रहते हैं—आप उनके बारे में क्या कहना चाहेंगे?"
+        },
 
         options: {
-
             en: [
-                "They eat meat because of conditioning from childhood, so they should not be blamed for eating meat.",
-
+                "They eat meat because of conditioning received from childhood, so they should not be blamed for eating meat.",
                 "People who have families and children have to live according to their circumstances; how will they support their families?",
-
-                "As a human being, they should try to understand their actions and their effects. If, even after understanding the harm, they knowingly refuse to think about it or change, their behaviour goes against their human capacity for discernment.",
-
+                "As human beings, they should try to understand their actions and their effects. If they understand the harm and still deliberately refuse to examine or change it, their behaviour goes against their capacity for human discernment.",
                 "Why should we say anything about them? It is their life and they can do whatever they want.",
-
-                "I am like that myself, so what can I say?"
+                "I am myself like that, so what can I say?"
             ],
 
             hi: [
                 "वे बचपन से मिली conditioning के कारण मांस खाते हैं, इसलिए उनके मांस खाने के लिए उन्हें दोष नहीं देना चाहिए।",
-
                 "जिन लोगों के परिवार और बच्चे हैं, उन्हें अपनी परिस्थितियों के अनुसार जीना पड़ता है; वे अपने परिवार का पालन-पोषण कैसे करेंगे?",
-
                 "एक मनुष्य होने के नाते उन्हें अपने कर्मों और उनके प्रभाव को समझने का प्रयास करना चाहिए। यदि नुकसान को समझने के बाद भी वे जानबूझकर उस पर विचार करने या बदलने से इनकार करते हैं, तो उनका व्यवहार उनकी मानवीय विवेक-क्षमता के विरुद्ध जाता है।",
-
                 "हम उनके बारे में क्यों कुछ कहें? उनकी ज़िंदगी है और वे जो चाहें करें।",
-
                 "मैं स्वयं वैसा हूँ, तो मैं क्या ही बोलूँ?"
             ]
         },
 
         scores: [-4, -4, 4, -2, 2],
 
-        explanations: {
+        bestOption: 2,
 
+        why: {
             en: [
-                "Conditioning from childhood can explain why a person eats meat, but it does not automatically make the behaviour right. A terrorist may also be taught from childhood to kill people, but does that make killing people right just because he was taught it? No. Similarly, simply saying that someone was taught to eat meat from childhood is not enough to justify the behaviour.",
-
-                "Having a family and children may explain someone's circumstances, but it does not by itself answer whether the action is right or wrong.",
-
-                "A human being should try to understand their actions and their effects. If someone understands the harm and still knowingly refuses to question or change, this assessment gives this response the highest score.",
-
-                "Saying that it is someone's life and they can do whatever they want avoids questioning the effect of their actions.",
-
-                "This response recognises that the person is also doing the same thing. It shows some self-awareness, but simply recognising it does not complete the process of questioning the behaviour."
+                "Conditioning can explain a behaviour, but explanation alone does not establish that the behaviour is right.",
+                "Personal circumstances can influence choices, but circumstances alone do not remove the need to examine one's actions and their effects.",
+                "This option asks a person to examine actions, consequences and responsibility rather than simply accepting conditioning.",
+                "Freedom to choose does not automatically remove responsibility for the consequences of a choice.",
+                "Recognising one's own contradiction can be honest, but stopping there does not move towards examination or change."
             ],
 
             hi: [
-                "बचपन की conditioning यह explain कर सकती है कि कोई व्यक्ति मांस क्यों खाता है, लेकिन केवल conditioning के कारण उसका व्यवहार सही नहीं हो जाता। ऐसे तो एक terrorist को भी बचपन से लोगों को मारना सिखाया जाता है, तो क्या सिर्फ इसलिए उसका लोगों को मारना सही हो जाएगा? नहीं। इसी तरह, केवल यह कहना कि “उसे बचपन से मांस खाना सिखाया गया है” उसके व्यवहार को सही ठहराने के लिए पर्याप्त नहीं है।",
-
-                "जिन लोगों के परिवार और बच्चे हैं, उनकी परिस्थितियाँ उनके व्यवहार को explain कर सकती हैं, लेकिन केवल परिवार की जिम्मेदारी यह तय नहीं करती कि कोई व्यवहार सही है या गलत।",
-
-                "एक मनुष्य को अपने कर्मों और उनके प्रभाव को समझने का प्रयास करना चाहिए। यदि नुकसान को समझने के बाद भी कोई व्यक्ति जानबूझकर उस पर प्रश्न करने या बदलने से इनकार करता है, तो इस मूल्यांकन में इस उत्तर को सबसे अधिक अंक दिए जाते हैं।",
-
-                "यह कहना कि यह उसकी ज़िंदगी है और वह जो चाहे करे, उसके कर्मों के प्रभाव पर प्रश्न करने से बचता है।",
-
-                "यह उत्तर यह स्वीकार करता है कि व्यक्ति स्वयं भी वैसा ही कर रहा है। इसमें कुछ आत्म-जागरूकता दिखाई देती है, लेकिन केवल इसे स्वीकार कर लेना अपने व्यवहार पर प्रश्न करने की प्रक्रिया को पूरा नहीं करता।"
+                "Conditioning किसी व्यवहार को समझा सकती है, लेकिन केवल explanation से वह व्यवहार सही सिद्ध नहीं हो जाता।",
+                "व्यक्तिगत परिस्थितियाँ चुनावों को प्रभावित कर सकती हैं, लेकिन वे अपने-आप कर्मों और उनके प्रभाव को समझने की जिम्मेदारी समाप्त नहीं करतीं।",
+                "यह विकल्प व्यक्ति को अपने कर्म, उनके प्रभाव और अपनी जिम्मेदारी को समझने की ओर ले जाता है।",
+                "चुनाव करने की स्वतंत्रता किसी चुनाव के परिणामों की जिम्मेदारी को अपने-आप समाप्त नहीं करती।",
+                "अपनी ही contradiction को स्वीकार करना ईमानदार हो सकता है, लेकिन वहीं रुक जाना समझ या बदलाव की ओर नहीं ले जाता।"
             ]
+        },
+
+        personalExplanationByOption: {
+
+            hi: {
+                0: `बचपन की conditioning यह explain कर सकती है कि कोई व्यक्ति मांस क्यों खाता है, लेकिन केवल conditioning के कारण उसका व्यवहार सही नहीं हो जाता। ऐसे तो एक terrorist को भी बचपन से लोगों को मारना सिखाया जाता है, तो क्या सिर्फ इसलिए उसका लोगों को मारना सही हो जाएगा? नहीं। इसी तरह, केवल यह कहना कि “उसे बचपन से मांस खाना सिखाया गया है” उसके व्यवहार को सही ठहराने के लिए पर्याप्त नहीं है।`
+            },
+
+            en: {
+                0: `Childhood conditioning can explain why a person eats meat, but conditioning alone does not make the behaviour right. A terrorist may also be taught from childhood to kill people, but does that make killing people right simply because it was taught to him? No. Similarly, merely saying that “he was taught to eat meat from childhood” is not enough to justify his behaviour.`
+            }
+        },
+
+        quote: {
+            en: "Be attentive so that one knows that one is acting out of conditioning.",
+            hi: "सजग रहो ताकि पता रहे कि तुम conditioning के कारण कार्य कर रहे हो।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/en/articles/how-to-move-to-freedom-from-slavery-1_6fd7036"
         }
     },
 
 
-    // =================================================
-    // Q6
-    // =================================================
+    /* -----------------------------------------------------
+       Q6
+    ----------------------------------------------------- */
     {
-        en: "Do you find it difficult to accept that someone you love has their own freedom?",
-        hi: "क्या आपके लिए यह स्वीकार करना कठिन होता है कि जिससे आप प्रेम करते हैं, उसे अपनी स्वतंत्रता है?",
+        id: 6,
+
+        question: {
+            en: "Do you find it difficult to accept that someone you love has their own freedom?",
+            hi: "क्या आपके लिए यह स्वीकार करना कठिन होता है कि जिससे आप प्रेम करते हैं, उसे अपनी स्वतंत्रता है?"
+        },
 
         options: {
             en: [
@@ -201,53 +349,57 @@ const questions = [
                 "Disagree",
                 "Strongly Disagree"
             ],
+
             hi: [
-                "बिल्कुल सहमत",
+                "पूरी तरह सहमत",
                 "सहमत",
                 "तटस्थ",
                 "असहमत",
-                "बिल्कुल असहमत"
+                "पूरी तरह असहमत"
             ]
         },
 
-        scores: [-4, -2, 0, 2, 4]
-    },
+        scores: [-4, -2, 0, 2, 4],
 
+        bestOption: 4,
 
-    // =================================================
-    // Q7
-    // =================================================
-    {
-        en: "Do you regularly observe your own thoughts and emotions?",
-        hi: "क्या आप नियमित रूप से अपने विचारों और भावनाओं को देखते और समझते हैं?",
-
-        options: {
+        why: {
             en: [
-                "Strongly Agree",
-                "Agree",
-                "Neutral",
-                "Disagree",
-                "Strongly Disagree"
+                "Difficulty accepting another person's freedom can turn love into attachment or control.",
+                "Some difficulty with another person's freedom can still create attachment and control.",
+                "This leaves your position towards another person's freedom unclear.",
+                "Accepting another person's freedom reduces the tendency to control them.",
+                "This clearly accepts that someone you love is still an individual with their own freedom."
             ],
+
             hi: [
-                "बिल्कुल सहमत",
-                "सहमत",
-                "तटस्थ",
-                "असहमत",
-                "बिल्कुल असहमत"
+                "दूसरे व्यक्ति की स्वतंत्रता स्वीकार करने में कठिनाई प्रेम को attachment या control में बदल सकती है।",
+                "दूसरे की स्वतंत्रता को लेकर कुछ कठिनाई भी attachment और control पैदा कर सकती है।",
+                "यह दूसरे व्यक्ति की स्वतंत्रता के प्रति आपका स्पष्ट रुख नहीं बताता।",
+                "दूसरे व्यक्ति की स्वतंत्रता स्वीकार करना उसे नियंत्रित करने की प्रवृत्ति को कम करता है।",
+                "यह स्पष्ट रूप से स्वीकार करता है कि जिससे आप प्रेम करते हैं, उसकी अपनी स्वतंत्रता भी है।"
             ]
         },
 
-        scores: [4, 2, 0, -2, -4]
+        quote: {
+            en: "Freedom is to be free of both—firstly others and secondly, and more importantly, yourself.",
+            hi: "स्वतंत्रता का अर्थ दूसरों से और उससे भी अधिक महत्वपूर्ण रूप से स्वयं से मुक्त होना है।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/en/articles/how-to-move-to-freedom-from-slavery-1_6fd7036"
+        }
     },
 
 
-    // =================================================
-    // Q8
-    // =================================================
+    /* -----------------------------------------------------
+       Q7
+    ----------------------------------------------------- */
     {
-        en: "Do you avoid telling the truth when it may damage your image?",
-        hi: "क्या आप तब सच बोलने से बचते हैं जब उससे आपकी छवि को नुकसान पहुँच सकता है?",
+        id: 7,
+
+        question: {
+            en: "Do you regularly observe your own thoughts and emotions?",
+            hi: "क्या आप नियमित रूप से अपने विचारों और भावनाओं को देखते और समझते हैं?"
+        },
 
         options: {
             en: [
@@ -257,54 +409,57 @@ const questions = [
                 "Disagree",
                 "Strongly Disagree"
             ],
+
             hi: [
-                "बिल्कुल सहमत",
+                "पूरी तरह सहमत",
                 "सहमत",
                 "तटस्थ",
                 "असहमत",
-                "बिल्कुल असहमत"
+                "पूरी तरह असहमत"
             ]
         },
 
-        scores: [-4, -2, 0, 2, 4]
-    },
+        scores: [4, 2, 0, -2, -4],
 
+        bestOption: 0,
 
-    // =================================================
-    // Q9
-    // =================================================
-    {
-        en: "Do you think about the impact of your lifestyle on animals and nature?",
-        hi: "क्या आप अपने जीवन जीने के तरीके के प्रभाव के बारे में पशुओं और प्रकृति के संदर्भ में सोचते हैं?",
-
-        options: {
+        why: {
             en: [
-                "Strongly Agree",
-                "Agree",
-                "Neutral",
-                "Disagree",
-                "Strongly Disagree"
+                "Regular observation of thoughts and emotions can help a person see their own tendencies and conditioning.",
+                "Some observation is present, but it is less consistent.",
+                "This does not clearly show a practice of self-observation.",
+                "Avoiding observation leaves thoughts and emotions less examined.",
+                "Rejecting self-observation leaves little room to understand one's own mental patterns."
             ],
+
             hi: [
-                "बिल्कुल सहमत",
-                "सहमत",
-                "तटस्थ",
-                "असहमत",
-                "बिल्कुल असहमत"
+                "विचारों और भावनाओं का नियमित observation व्यक्ति को अपनी tendencies और conditioning को देखने में मदद कर सकता है।",
+                "कुछ observation मौजूद है, लेकिन यह लगातार नहीं है।",
+                "यह self-observation की स्पष्ट आदत नहीं दिखाता।",
+                "Observation से बचने पर विचार और भावनाएँ कम जाँची जाती हैं।",
+                "Self-observation को अस्वीकार करने से अपनी मानसिक प्रवृत्तियों को समझने की संभावना कम हो जाती है।"
             ]
         },
 
-        scores: [4, 2, 0, -2, -4]
+        quote: {
+            en: "By keeping a close watch on our thoughts and emotions, we can discern underlying tendencies.",
+            hi: "अपने विचारों और भावनाओं पर ध्यानपूर्वक नज़र रखने से हम अपनी भीतर की प्रवृत्तियों को समझ सकते हैं।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/on-youtube/9913604"
+        }
     },
 
 
-    // =================================================
-    // Q10 — WOMEN EMPOWERMENT
-    // =================================================
+    /* -----------------------------------------------------
+       Q8
+    ----------------------------------------------------- */
     {
-        en: "\"Girls are equal to boys.\" Does this sentence show women's empowerment?",
+        id: 8,
 
-        hi: "“लड़कियाँ लड़कों के बराबर हैं।” क्या यह वाक्य महिला सशक्तिकरण को दर्शाता है?",
+        question: {
+            en: "Do you avoid telling the truth when it may damage your image?",
+            hi: "क्या आप तब सच बोलने से बचते हैं जब उससे आपकी छवि को नुकसान पहुँच सकता है?"
+        },
 
         options: {
             en: [
@@ -316,616 +471,463 @@ const questions = [
             ],
 
             hi: [
-                "बिल्कुल सहमत",
+                "पूरी तरह सहमत",
                 "सहमत",
                 "तटस्थ",
                 "असहमत",
-                "बिल्कुल असहमत"
+                "पूरी तरह असहमत"
+            ]
+        },
+
+        scores: [-4, -2, 0, 2, 4],
+
+        bestOption: 4,
+
+        why: {
+            en: [
+                "Avoiding truth to protect an image places image above truthfulness.",
+                "Choosing image over truth can keep a person dependent on external approval.",
+                "This does not clearly show whether truth or image has priority.",
+                "Reducing the tendency to hide truth shows greater commitment to truthfulness.",
+                "Refusing to avoid truth merely to protect an image gives truthfulness priority over image."
+            ],
+
+            hi: [
+                "छवि बचाने के लिए सत्य से बचना छवि को सत्य से ऊपर रखता है।",
+                "सत्य के बजाय छवि चुनना व्यक्ति को बाहरी approval पर निर्भर रख सकता है।",
+                "यह स्पष्ट नहीं करता कि सत्य महत्वपूर्ण है या छवि।",
+                "सत्य छिपाने की प्रवृत्ति कम करना सत्य के प्रति अधिक प्रतिबद्धता दिखाता है।",
+                "केवल अपनी छवि बचाने के लिए सत्य से न बचना सत्य को छवि से ऊपर रखता है।"
+            ]
+        },
+
+        quote: {
+            en: "Satyam — truthfulness.",
+            hi: "सत्यम् — सत्य।",
+            person: "Sri Krishna — Bhagavad Gita 16.2",
+            url: "https://www.gitasupersite.iitk.ac.in/srimad?etgb=1&field_chapter_value=16&field_nsutra_value=2&language=dv&setgb=1"
+        }
+    },
+
+
+    /* -----------------------------------------------------
+       Q9
+    ----------------------------------------------------- */
+    {
+        id: 9,
+
+        question: {
+            en: "Do you think about the impact of your lifestyle on animals and nature?",
+            hi: "क्या आप अपने जीवन जीने के तरीके के प्रभाव के बारे में पशुओं और प्रकृति के संदर्भ में सोचते हैं?"
+        },
+
+        options: {
+            en: [
+                "Strongly Agree",
+                "Agree",
+                "Neutral",
+                "Disagree",
+                "Strongly Disagree"
+            ],
+
+            hi: [
+                "पूरी तरह सहमत",
+                "सहमत",
+                "तटस्थ",
+                "असहमत",
+                "पूरी तरह असहमत"
+            ]
+        },
+
+        scores: [4, 2, 0, -2, -4],
+
+        bestOption: 0,
+
+        why: {
+            en: [
+                "Considering how one's lifestyle affects other beings and nature encourages broader awareness of consequences.",
+                "Some consideration is present, though it may not be consistent.",
+                "This leaves the level of consideration unclear.",
+                "Ignoring such effects reduces attention to the consequences of one's lifestyle.",
+                "Rejecting consideration of impacts leaves important consequences outside the reflection."
+            ],
+
+            hi: [
+                "अपने जीवन के प्रभाव को दूसरे जीवों और प्रकृति के संदर्भ में देखना परिणामों के प्रति व्यापक जागरूकता दिखाता है।",
+                "कुछ consideration मौजूद है, लेकिन यह लगातार नहीं भी हो सकती।",
+                "यह स्पष्ट नहीं करता कि आप इन प्रभावों के बारे में कितना सोचते हैं।",
+                "इन प्रभावों को नज़रअंदाज़ करना जीवनशैली के परिणामों पर ध्यान कम करता है।",
+                "प्रभावों पर विचार करने से इनकार करना महत्वपूर्ण परिणामों को reflection से बाहर कर देता है।"
+            ]
+        },
+
+        quote: {
+            en: "He who hates no creature, who is friendly and compassionate to all.",
+            hi: "जो किसी भी प्राणी से द्वेष नहीं करता और सबके प्रति मैत्रीपूर्ण तथा करुणामय है।",
+            person: "Sri Krishna — Bhagavad Gita 12.13",
+            url: "https://www.gitasupersite.iitk.ac.in/srimad?choose=1&field_chapter_value=12&field_nsutra_value=13&language=dv&setgb=1"
+        }
+    },
+
+
+    /* -----------------------------------------------------
+       Q10
+    ----------------------------------------------------- */
+    {
+        id: 10,
+
+        question: {
+            en: "\"Girls are equal to boys.\" Does this sentence show women's empowerment?",
+
+            hi: "“लड़कियाँ लड़कों के बराबर हैं।” क्या यह वाक्य महिला सशक्तिकरण को दर्शाता है?"
+        },
+
+        options: {
+            en: [
+                "Strongly Agree",
+                "Agree",
+                "Neutral",
+                "Disagree",
+                "Strongly Disagree"
+            ],
+
+            hi: [
+                "पूरी तरह सहमत",
+                "सहमत",
+                "तटस्थ",
+                "असहमत",
+                "पूरी तरह असहमत"
             ]
         },
 
         scores: [-4, -4, 0, 2, 4],
 
-        explanations: {
+        bestOption: 4,
 
-            en: "\"Girls are equal to boys\" — this sentence itself shows that you are assuming that boys are bigger or stronger. Suppose a boy has failed the tenth grade and is a delinquent or a thug, while a girl of the same age is an MBBS doctor. Can there be any comparison between that boy and girl? No. So if you have to compare, compare at the level of consciousness. Anyone can be weak — a boy or a girl. The one who is unconscious is weak.",
+        why: {
+            en: [
+                "This accepts the sentence without questioning the assumption behind the comparison.",
+                "This still accepts the comparison between girls and boys as the basis of empowerment.",
+                "This neither accepts nor rejects the comparison.",
+                "This begins to question whether comparison with boys is the right basis for empowerment.",
+                "This questions whether empowerment should be defined merely through comparison with boys."
+            ],
 
-            hi: "“लड़कियाँ लड़कों के बराबर हैं” — इस वाक्य से ही यह पता चलता है कि आप यह मान रहे हैं कि हाँ, लड़के बड़े होते हैं, मजबूत होते हैं। कोई लड़का दसवीं में असफल है, आवारा है, गुंडा है, वहीं एक लड़की एमबीबीएस डॉक्टर है, उसी उम्र की, तो अब उस लड़के और लड़की में कोई तुलना हो सकती है क्या? नहीं न? तो तुलना करनी भी है तो चेतना के स्तर पर करो। कमजोर तो कोई भी हो सकता है, लड़का भी, लड़की भी। जो अचेतन है, वह कमजोर है।"
+            hi: [
+                "यह वाक्य comparison के पीछे छिपी assumption को question किए बिना स्वीकार करता है।",
+                "यह भी empowerment को लड़कों के साथ comparison के आधार पर स्वीकार करता है।",
+                "यह comparison को न स्वीकार करता है, न अस्वीकार।",
+                "यह प्रश्न उठाना शुरू करता है कि empowerment का आधार लड़कों से comparison होना चाहिए या नहीं।",
+                "यह प्रश्न करता है कि empowerment को केवल लड़कों के साथ comparison से ही क्यों परिभाषित किया जाए।"
+            ]
+        },
+
+        personalExplanationByOption: {
+
+            hi: {
+                0: `“लड़कियाँ लड़कों के बराबर हैं” — इस वाक्य से ही यह पता चलता है कि आप यह मान रहे हैं कि हाँ, लड़के बड़े होते हैं, मजबूत होते हैं। कोई लड़का दसवीं में असफल है, आवारा है, गुंडा है, वहीं एक लड़की एमबीबीएस डॉक्टर है, उसी उम्र की, तो अब उस लड़के और लड़की में कोई तुलना हो सकती है क्या? नहीं न? तो तुलना करनी भी है तो चेतना के स्तर पर करो। कमजोर तो कोई भी हो सकता है, लड़का भी, लड़की भी। जो अचेतन है, वह कमजोर है।`
+            },
+
+            en: {
+                0: `"Girls are equal to boys" — this sentence itself shows that you are assuming that boys are bigger or stronger. Suppose a boy has failed the tenth grade and is a delinquent or a thug, while a girl of the same age is an MBBS doctor. Can there be any comparison between that boy and girl? No. So if comparison has to be made, make it at the level of consciousness. Anyone can be weak — a boy or a girl. The one who is unconscious is weak.`
+            }
+        },
+
+        quote: {
+            en: "The only plane where true equality exists is that of consciousness.",
+            hi: "सच्ची समानता का स्तर चेतना का है।",
+            person: "Acharya Prashant",
+            url: "https://acharyaprashant.org/on-youtube/b1f1507"
         }
     }
+
 ];
 
 
-// =====================================================
-// STATE
-// =====================================================
+/* =========================================================
+   LANGUAGE HELPERS
+   ========================================================= */
 
-let selectedLanguage = "en";
-let voiceEnabled = false;
+function t(obj) {
+    if (!obj) return "";
+    return obj[currentLanguage] || obj.en || "";
+}
 
-let currentQuestion = 0;
-
-let answers =
-    Array(questions.length).fill(null);
-
-let assessmentActive = false;
+function getOptionText(question, index) {
+    return question.options[currentLanguage][index];
+}
 
 
-// =====================================================
-// LANGUAGE SELECTION
-// =====================================================
+/* =========================================================
+   HTML SECURITY
+   ========================================================= */
+
+function escapeHTML(value) {
+    if (value === null || value === undefined) return "";
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   START / LANGUAGE
+   ========================================================= */
 
 function showLanguageSelection() {
 
-    assessmentActive = false;
+    document.body.innerHTML = `
+        <div class="language-screen">
 
-    document.querySelector(".hero").innerHTML = `
+            <div class="language-card">
 
-        <h2>Choose Your Language</h2>
+                <h1>Consciousness with Bhaskar</h1>
 
-        <div class="navigation">
+                <p>
+                    Choose your language
+                </p>
 
-            <button onclick="selectLanguage('en')">
-                English
-            </button>
+                <div class="language-buttons">
 
-            <button onclick="selectLanguage('hi')">
-                हिन्दी
-            </button>
+                    <button onclick="selectLanguage('en', false)">
+                        English
+                    </button>
 
-            <button onclick="selectLanguage('voice')">
-                🔊 Voice Assistance
-            </button>
+                    <button onclick="selectLanguage('hi', false)">
+                        हिन्दी
+                    </button>
+
+                    <button onclick="showVoiceLanguageSelection()">
+                        🎙️ Voice Assistant
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
     `;
 }
 
-
-// =====================================================
-// SELECT LANGUAGE
-// =====================================================
-
-function selectLanguage(language) {
-
-    if (language === "voice") {
-
-        voiceEnabled = true;
-
-        showVoiceLanguageSelection();
-
-        return;
-    }
-
-    voiceEnabled = false;
-
-    selectedLanguage = language;
-
-    showLanguageHome();
-}
-
-
-// =====================================================
-// VOICE LANGUAGE
-// =====================================================
 
 function showVoiceLanguageSelection() {
 
-    assessmentActive = false;
+    document.body.innerHTML = `
+        <div class="language-screen">
 
-    document.querySelector(".hero").innerHTML = `
+            <div class="language-card">
 
-        <h2>🔊 Voice Assistant</h2>
+                <h1>🎙️ Voice Assistant</h1>
 
-        <div class="navigation">
+                <p>
+                    Choose the language for the voice assistant
+                </p>
 
-            <button onclick="chooseVoiceLanguage('en')">
-                English
-            </button>
+                <div class="language-buttons">
 
-            <button onclick="chooseVoiceLanguage('hi')">
-                हिन्दी
-            </button>
+                    <button onclick="selectLanguage('en', true)">
+                        English Voice
+                    </button>
+
+                    <button onclick="selectLanguage('hi', true)">
+                        हिन्दी Voice
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
     `;
-
-    setTimeout(() => {
-
-        speakText(
-            "Choose English or Hindi."
-        );
-
-    }, 300);
 }
 
 
-function chooseVoiceLanguage(language) {
+function selectLanguage(language, useVoice) {
 
-    selectedLanguage = language;
-
-    voiceEnabled = true;
-
-    showLanguageHome();
-
-}
-
-
-// =====================================================
-// HOME
-// =====================================================
-
-function showLanguageHome() {
-
-    assessmentActive = false;
-
-    if (selectedLanguage === "hi") {
-
-        document.querySelector(".hero").innerHTML = `
-
-            <h2>स्वागत है</h2>
-
-            <p>
-                स्वयं को समझें।
-                अपनी धारणाओं पर प्रश्न करें।
-                सचेत होकर जिएँ।
-            </p>
-
-            <button onclick="startAssessment()">
-                मूल्यांकन शुरू करें
-            </button>
-
-        `;
-
-    } else {
-
-        document.querySelector(".hero").innerHTML = `
-
-            <h2>Welcome</h2>
-
-            <p>
-                Understand yourself.
-                Question your beliefs.
-                Live consciously.
-            </p>
-
-            <button onclick="startAssessment()">
-                Start Assessment
-            </button>
-
-        `;
-    }
-
-
-    if (voiceEnabled) {
-
-        setTimeout(() => {
-
-            if (selectedLanguage === "hi") {
-
-                speakText(
-                    "मूल्यांकन शुरू करने के लिए बटन दबाएँ।"
-                );
-
-            } else {
-
-                speakText(
-                    "Press the Start Assessment button to begin."
-                );
-            }
-
-        }, 300);
-    }
-}
-
-
-// =====================================================
-// START
-// =====================================================
-
-function startAssessment() {
+    currentLanguage = language;
+    voiceMode = useVoice;
+    voiceLanguage = language;
 
     currentQuestion = 0;
+    answers = Array(questions.length).fill(null);
 
-    answers =
-        Array(questions.length).fill(null);
+    renderQuestion();
 
-    assessmentActive = true;
+    if (voiceMode) {
+        setTimeout(() => {
 
-    showQuestion();
+            speak(
+                language === "en"
+                    ? "Voice Assistant activated. Select an answer using A, B, C, D or E."
+                    : "वॉइस असिस्टेंट सक्रिय है। A, B, C, D या E दबाकर उत्तर चुनें।"
+            );
+
+        }, 700);
+    }
 }
 
 
-// =====================================================
-// SHOW QUESTION
-// =====================================================
+/* =========================================================
+   QUESTION SCREEN
+   ========================================================= */
 
-function showQuestion() {
+function renderQuestion() {
 
-    assessmentActive = true;
+    const q = questions[currentQuestion];
 
-    const question =
-        questions[currentQuestion];
+    const optionLetters = ["A", "B", "C", "D", "E"];
 
-    const language =
-        selectedLanguage;
+    document.body.innerHTML = `
 
-    const options =
-        question.options[language];
+        <div class="assessment-container">
 
-    let optionsHTML = "";
+            <div class="assessment-header">
 
+                <h1>Consciousness with Bhaskar</h1>
 
-    for (let i = 0; i < options.length; i++) {
+                <div class="progress">
+                    ${currentQuestion + 1} / ${questions.length}
+                </div>
 
-        const checked =
-            answers[currentQuestion] === i
-                ? "checked"
-                : "";
+            </div>
 
-        const letter =
-            String.fromCharCode(65 + i);
+            <div class="question-card">
 
+                <h2>
+                    ${escapeHTML(t(q.question))}
+                </h2>
 
-        optionsHTML += `
+                <div class="options">
 
-            <label class="option">
+                    ${q.options[currentLanguage].map((option, index) => `
 
-                <input
-                    type="radio"
-                    name="answer"
-                    value="${i}"
-                    ${checked}
-                    onchange="saveAnswer(${i})"
+                        <button
+                            class="option-button ${answers[currentQuestion] === index ? "selected" : ""}"
+                            onclick="selectAnswer(${index})"
+                        >
+
+                            <span class="option-letter">
+                                ${optionLetters[index]}
+                            </span>
+
+                            <span>
+                                ${escapeHTML(option)}
+                            </span>
+
+                        </button>
+
+                    `).join("")}
+
+                </div>
+
+            </div>
+
+            <div class="navigation">
+
+                <button
+                    onclick="previousQuestion()"
+                    ${currentQuestion === 0 ? "disabled" : ""}
                 >
+                    ${currentLanguage === "en" ? "← Previous" : "← पिछला"}
+                </button>
 
-                <strong>${letter}</strong>
-                — ${options[i]}
+                ${
+                    currentQuestion === questions.length - 1
 
-            </label>
+                    ? `
+                        <button
+                            onclick="finishAssessment()"
+                            ${answers[currentQuestion] === null ? "disabled" : ""}
+                        >
+                            ${currentLanguage === "en" ? "See Result" : "परिणाम देखें"}
+                        </button>
+                    `
 
-        `;
-    }
+                    : `
+                        <button
+                            onclick="nextQuestion()"
+                            ${answers[currentQuestion] === null ? "disabled" : ""}
+                        >
+                            ${currentLanguage === "en" ? "Next →" : "अगला →"}
+                        </button>
+                    `
+                }
 
-
-    document.querySelector(".hero").innerHTML = `
-
-        <p>
-
-            ${
-                language === "hi"
-                ? `प्रश्न ${currentQuestion + 1} / ${questions.length}`
-                : `Question ${currentQuestion + 1} of ${questions.length}`
-            }
-
-        </p>
-
-
-        <h2>
-            ${question[language]}
-        </h2>
-
-
-        <div class="options">
-
-            ${optionsHTML}
-
-        </div>
-
-
-        ${
-            voiceEnabled
-            ? `
-                <p class="voice-instruction">
-
-                    ${
-                        language === "hi"
-                        ? "विकल्प चुनने के लिए A, B, C, D या E दबाएँ।"
-                        : "Press A, B, C, D, or E to choose an option."
-                    }
-
-                </p>
-            `
-            : ""
-        }
-
-
-        <div class="navigation">
+            </div>
 
             ${
-                currentQuestion > 0
+                voiceMode
+
                 ? `
-                    <button onclick="previousQuestion()">
-                        ${
-                            language === "hi"
-                            ? "पिछला"
-                            : "Previous"
-                        }
-                    </button>
+                    <div class="voice-controls">
+
+                        <p>
+                            ${
+                                currentLanguage === "en"
+                                    ? "Voice Controls: A/B/C/D/E = Answer • N = Next • P = Previous • R = Review • Space = Repeat"
+                                    : "वॉइस कंट्रोल: A/B/C/D/E = उत्तर • N = अगला • P = पिछला • R = Review • Space = दोहराएँ"
+                            }
+                        </p>
+
+                        <button onclick="repeatQuestion()">
+                            🔊 ${
+                                currentLanguage === "en"
+                                    ? "Repeat Question"
+                                    : "प्रश्न दोहराएँ"
+                            }
+                        </button>
+
+                    </div>
                 `
                 : ""
             }
 
-
-            ${
-                currentQuestion < questions.length - 1
-
-                ? `
-                    <button onclick="nextQuestion()">
-                        ${
-                            language === "hi"
-                            ? "अगला"
-                            : "Next"
-                        }
-                    </button>
-                `
-
-                : `
-                    <button onclick="showReview()">
-                        ${
-                            language === "hi"
-                            ? "अपने उत्तरों की समीक्षा करें"
-                            : "Review Your Answers"
-                        }
-                    </button>
-                `
-            }
-
         </div>
-
     `;
 
-
-    // VOICE
-    if (voiceEnabled) {
-
-        let voiceText = "";
-
-
-        if (language === "hi") {
-
-            voiceText =
-                `प्रश्न ${currentQuestion + 1}। ${question.hi}। `;
-
-            options.forEach((option, index) => {
-
-                const letter =
-                    String.fromCharCode(65 + index);
-
-                voiceText +=
-                    `विकल्प ${letter}। ${option}।`;
-            });
-
-            voiceText +=
-                "विकल्प चुनने के लिए A, B, C, D या E दबाएँ।";
-
-        } else {
-
-            voiceText =
-                `Question ${currentQuestion + 1}. ${question.en}. `;
-
-            options.forEach((option, index) => {
-
-                const letter =
-                    String.fromCharCode(65 + index);
-
-                voiceText +=
-                    `Option ${letter}. ${option}.`;
-            });
-
-            voiceText +=
-                "Press A, B, C, D, or E to choose an option.";
-        }
-
-
-        setTimeout(() => {
-
-            speakText(voiceText);
-
-        }, 300);
+    if (voiceMode) {
+        setTimeout(() => speakCurrentQuestion(), 300);
     }
 }
 
 
-// =====================================================
-// SAVE ANSWER
-// =====================================================
+/* =========================================================
+   ANSWER SELECTION
+   ========================================================= */
 
-function saveAnswer(optionNumber) {
+function selectAnswer(index) {
 
-    answers[currentQuestion] =
-        optionNumber;
+    answers[currentQuestion] = index;
 
-
-    if (voiceEnabled) {
-
-        const option =
-            questions[currentQuestion]
-                .options[selectedLanguage][optionNumber];
-
-        const letter =
-            String.fromCharCode(
-                65 + optionNumber
-            );
-
-
-        if (selectedLanguage === "hi") {
-
-            speakText(
-                `आपने विकल्प ${letter} चुना है।`
-            );
-
-        } else {
-
-            speakText(
-                `You selected option ${letter}.`
-            );
-        }
-    }
+    renderQuestion();
 }
 
 
-// =====================================================
-// KEYBOARD
-// =====================================================
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            !voiceEnabled ||
-            !assessmentActive
-        ) {
-            return;
-        }
-
-
-        const key =
-            event.key.toLowerCase();
-
-
-        const optionKeys = {
-
-            a: 0,
-            b: 1,
-            c: 2,
-            d: 3,
-            e: 4
-
-        };
-
-
-        // A-E
-        if (
-            Object.prototype.hasOwnProperty.call(
-                optionKeys,
-                key
-            )
-        ) {
-
-            answers[currentQuestion] =
-                optionKeys[key];
-
-            showQuestion();
-
-            return;
-        }
-
-
-        // N
-        if (key === "n") {
-
-            nextQuestion();
-
-            return;
-        }
-
-
-        // P
-        if (key === "p") {
-
-            previousQuestion();
-
-            return;
-        }
-
-
-        // R
-        if (key === "r") {
-
-            showReview();
-
-            return;
-        }
-
-
-        // SPACE
-        if (event.code === "Space") {
-
-            event.preventDefault();
-
-            repeatCurrentQuestion();
-
-            return;
-        }
-
-    }
-);
-
-
-// =====================================================
-// REPEAT
-// =====================================================
-
-function repeatCurrentQuestion() {
-
-    if (!voiceEnabled) {
-        return;
-    }
-
-    showQuestion();
-}
-
-
-// =====================================================
-// NEXT
-// =====================================================
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
 function nextQuestion() {
 
-    if (
-        answers[currentQuestion] === null
-    ) {
+    if (answers[currentQuestion] === null) return;
 
-        if (voiceEnabled) {
-
-            speakText(
-
-                selectedLanguage === "hi"
-
-                ? "कृपया पहले एक विकल्प चुनें।"
-
-                : "Please choose an option first."
-
-            );
-
-        } else {
-
-            alert(
-
-                selectedLanguage === "hi"
-
-                ? "कृपया पहले एक विकल्प चुनें।"
-
-                : "Please select an answer first."
-
-            );
-        }
-
-        return;
-    }
-
-
-    if (
-        currentQuestion <
-        questions.length - 1
-    ) {
+    if (currentQuestion < questions.length - 1) {
 
         currentQuestion++;
 
-        showQuestion();
+        renderQuestion();
 
     } else {
 
-        showReview();
+        finishAssessment();
+
     }
 }
 
-
-// =====================================================
-// PREVIOUS
-// =====================================================
 
 function previousQuestion() {
 
@@ -933,528 +935,389 @@ function previousQuestion() {
 
         currentQuestion--;
 
-        showQuestion();
+        renderQuestion();
+
     }
 }
 
 
-// =====================================================
-// REVIEW
-// =====================================================
+/* =========================================================
+   SCORE
+   ========================================================= */
 
-function showReview() {
+function calculateScore() {
 
-    const unanswered =
-        answers.findIndex(
-            answer => answer === null
+    let total = 0;
+
+    answers.forEach((answer, index) => {
+
+        if (answer !== null) {
+
+            total += questions[index].scores[answer];
+
+        }
+
+    });
+
+    return total;
+}
+
+
+function calculatePercentage(score) {
+
+    return Math.round((score / 40) * 100);
+
+}
+
+
+function getClassification(percentage) {
+
+    if (percentage >= 90) {
+
+        return {
+            en: "High Awareness",
+            hi: "उच्च जागरूकता"
+        };
+
+    }
+
+    if (percentage >= 70) {
+
+        return {
+            en: "Good Awareness",
+            hi: "अच्छी जागरूकता"
+        };
+
+    }
+
+    if (percentage >= 50) {
+
+        return {
+            en: "Some Improvement Needed",
+            hi: "थोड़ा सुधार चाहिए"
+        };
+
+    }
+
+    if (percentage >= 33) {
+
+        return {
+            en: "Low Awareness",
+            hi: "कम जागरूकता"
+        };
+
+    }
+
+    if (percentage >= 0) {
+
+        return {
+            en: "Very Low Awareness",
+            hi: "बहुत कम जागरूकता"
+        };
+
+    }
+
+    return {
+        en: "Unconscious",
+        hi: "अचेतन"
+    };
+}
+
+
+/* =========================================================
+   FINISH
+   ========================================================= */
+
+function finishAssessment() {
+
+    if (answers.includes(null)) {
+
+        alert(
+            currentLanguage === "en"
+                ? "Please answer all questions first."
+                : "कृपया पहले सभी प्रश्नों के उत्तर दें।"
         );
-
-
-    if (unanswered !== -1) {
-
-        currentQuestion =
-            unanswered;
-
-        showQuestion();
 
         return;
     }
 
+    const score = calculateScore();
+    const percentage = calculatePercentage(score);
+    const classification = getClassification(percentage);
 
-    assessmentActive = false;
+    renderResult(score, percentage, classification);
 
+    if (voiceMode) {
 
-    const language =
-        selectedLanguage;
+        setTimeout(() => {
 
-
-    let reviewHTML = "";
-
-
-    for (
-        let i = 0;
-        i < questions.length;
-        i++
-    ) {
-
-        const letter =
-            String.fromCharCode(
-                65 + answers[i]
+            speak(
+                currentLanguage === "en"
+                    ? `Your Consciousness Score is ${percentage} percent. Your assessment result is ${classification.en}.`
+                    : `आपका Consciousness Score ${percentage} प्रतिशत है। आपका परिणाम ${classification.hi} है।`
             );
 
+        }, 800);
+    }
+}
 
-        const option =
-            questions[i]
-                .options[language][answers[i]];
 
+/* =========================================================
+   RESULT SCREEN
+   ========================================================= */
 
-        reviewHTML += `
+function renderResult(score, percentage, classification) {
 
-            <div class="review-question">
+    document.body.innerHTML = `
 
-                <h3>
+        <div class="result-container">
 
+            <div class="result-header">
+
+                <h1>
+                    Consciousness with Bhaskar
+                </h1>
+
+                <h2>
                     ${
-                        language === "hi"
-                        ? `प्रश्न ${i + 1}`
-                        : `Question ${i + 1}`
+                        currentLanguage === "en"
+                            ? "Your Consciousness Assessment Result"
+                            : "आपका Consciousness Assessment Result"
                     }
+                </h2>
 
-                </h3>
+            </div>
+
+
+            <div class="score-card">
+
+                <div class="score-number">
+                    ${percentage}%
+                </div>
+
+                <div class="score-label">
+                    ${escapeHTML(classification[currentLanguage])}
+                </div>
+
+                <div class="raw-score">
+                    ${
+                        currentLanguage === "en"
+                            ? `Raw Score: ${score} / 40`
+                            : `Raw Score: ${score} / 40`
+                    }
+                </div>
+
+            </div>
+
+
+            <div class="result-note">
+
+                ${
+                    currentLanguage === "en"
+
+                    ? "This assessment is for self-reflection. It is not a scientific or clinical diagnosis."
+
+                    : "यह assessment आत्म-चिंतन के लिए है। यह कोई वैज्ञानिक या clinical diagnosis नहीं है।"
+                }
+
+            </div>
+
+
+            <div class="answer-review">
+
+                <h2>
+                    ${
+                        currentLanguage === "en"
+                            ? "Question-wise Reflection"
+                            : "प्रश्नवार Reflection"
+                    }
+                </h2>
+
+                ${questions.map((q, index) => renderQuestionReview(q, index)).join("")}
+
+            </div>
+
+
+            <div class="final-message">
+
+                <h2>
+                    ${
+                        currentLanguage === "en"
+                            ? "Question yourself. Observe yourself. Live consciously."
+                            : "स्वयं से प्रश्न करें। स्वयं को देखें। सचेत होकर जिएँ।"
+                    }
+                </h2>
+
+            </div>
+
+
+            <div class="gita-community">
+
+                <h2>
+                    ${
+                        currentLanguage === "en"
+                            ? "Want to explore the Gita deeper?"
+                            : "गीता को और गहराई से समझना चाहते हैं?"
+                    }
+                </h2>
 
                 <p>
-                    ${questions[i][language]}
+                    ${
+                        currentLanguage === "en"
+                            ? "Join Acharya Prashant's Gita community to know yourself."
+                            : "स्वयं को जानने के लिए आचार्य प्रशांत की गीता community से जुड़ें।"
+                    }
                 </p>
 
-                <strong>
-
+                <a
+                    href="https://acharyaprashant.org/en/gita/referral?referrerId=2131173a-44bc-4023-a22d-05d8aeb45638"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     ${
-                        language === "hi"
-                        ? "आपका उत्तर"
-                        : "Your Answer"
+                        currentLanguage === "en"
+                            ? "Join Gita Community ↗"
+                            : "गीता Community से जुड़ें ↗"
                     }
+                </a>
 
-                    :
+            </div>
 
-                    ${letter} — ${option}
 
-                </strong>
+            <div class="result-actions">
 
-                <br><br>
-
-                <button onclick="editQuestion(${i})">
-
+                <button onclick="restartAssessment()">
                     ${
-                        language === "hi"
-                        ? "उत्तर बदलें"
-                        : "Edit Answer"
+                        currentLanguage === "en"
+                            ? "Take Assessment Again"
+                            : "Assessment फिर से करें"
                     }
-
                 </button>
 
             </div>
 
-        `;
-    }
-
-
-    document.querySelector(".hero").innerHTML = `
-
-        <h2>
-
-            ${
-                language === "hi"
-                ? "अपने उत्तरों की समीक्षा करें"
-                : "Review Your Answers"
-            }
-
-        </h2>
-
-        ${reviewHTML}
-
-
-        <button onclick="finalSubmit()">
-
-            ${
-                language === "hi"
-                ? "अंतिम सबमिट"
-                : "Final Submit"
-            }
-
-        </button>
-
+        </div>
     `;
-
-
-    if (voiceEnabled) {
-
-        speakText(
-
-            language === "hi"
-
-            ? "अपने उत्तरों की समीक्षा करें। अंतिम सबमिट करने से पहले अपने उत्तरों को ध्यान से देखें।"
-
-            : "Review your answers carefully before final submission."
-
-        );
-    }
 }
 
 
-// =====================================================
-// EDIT
-// =====================================================
+/* =========================================================
+   QUESTION REVIEW
+   ========================================================= */
 
-function editQuestion(questionNumber) {
+function renderQuestionReview(q, index) {
 
-    currentQuestion =
-        questionNumber;
+    const selected = answers[index];
 
-    showQuestion();
-}
+    const isBest = selected === q.bestOption;
 
+    const selectedText = getOptionText(q, selected);
+    const bestText = getOptionText(q, q.bestOption);
 
-// =====================================================
-// FINAL SUBMIT
-// =====================================================
+    const statusClass = isBest
+        ? "review-correct"
+        : "review-wrong";
 
-function finalSubmit() {
+    const statusIcon = isBest
+        ? "✓"
+        : "✕";
 
-    let rawScore = 0;
+    const statusTitle = isBest
 
+        ? (
+            currentLanguage === "en"
+                ? "More Conscious Option"
+                : "इस मूल्यांकन में अधिक सचेत विकल्प"
+        )
 
-    // DIRECT SCORE
-    for (
-        let i = 0;
-        i < answers.length;
-        i++
-    ) {
-
-        rawScore +=
-            questions[i].scores[answers[i]];
-    }
-
-
-    // -40 TO +40
-    const consciousnessScore =
-        Math.round(
-            (rawScore / 40) * 100
+        : (
+            currentLanguage === "en"
+                ? "Not the More Conscious Option"
+                : "इस मूल्यांकन में अधिक सचेत विकल्प नहीं"
         );
 
 
-    const language =
-        selectedLanguage;
+    const whyText =
+        q.why[currentLanguage][selected];
 
 
-    // =================================================
-    // FINAL SCORE CRITERIA
-    // =================================================
+    let explanationHTML = "";
 
-    let level = "";
 
+    /*
+       PERSONAL EXPLANATION
+       If the user supplied a personal explanation for
+       the selected option, ONLY that explanation is shown.
+       No website/source/philosopher is added.
+    */
 
-    if (consciousnessScore >= 90) {
+    const personalExplanation =
+        q.personalExplanationByOption &&
+        q.personalExplanationByOption[currentLanguage] &&
+        q.personalExplanationByOption[currentLanguage][selected];
 
-        level =
-            language === "hi"
-            ? "उच्च जागरूकता"
-            : "High Awareness";
 
-    }
+    if (personalExplanation) {
 
-    else if (consciousnessScore >= 70) {
+        explanationHTML = `
 
-        level =
-            language === "hi"
-            ? "अच्छी जागरूकता"
-            : "Good Awareness";
+            <div class="personal-explanation">
 
-    }
-
-    else if (consciousnessScore >= 50) {
-
-        level =
-            language === "hi"
-            ? "थोड़ा सुधार चाहिए"
-            : "Some Improvement Needed";
-
-    }
-
-    else if (consciousnessScore >= 33) {
-
-        level =
-            language === "hi"
-            ? "कम जागरूकता"
-            : "Low Awareness";
-
-    }
-
-    else if (consciousnessScore >= 0) {
-
-        level =
-            language === "hi"
-            ? "बहुत कम जागरूकता"
-            : "Very Low Awareness";
-
-    }
-
-    else {
-
-        level =
-            language === "hi"
-            ? "अचेतन"
-            : "Unconscious";
-    }
-
-
-    // =================================================
-    // RESULT
-    // =================================================
-
-    document.querySelector(".hero").innerHTML = `
-
-        <h2>
-
-            ${
-                language === "hi"
-                ? "मूल्यांकन पूरा हुआ"
-                : "Assessment Completed"
-            }
-
-        </h2>
-
-
-        <h3>
-
-            ${
-                language === "hi"
-                ? "आपका चेतना स्कोर"
-                : "Your Consciousness Score"
-            }
-
-        </h3>
-
-
-        <p style="font-size: 40px;">
-
-            ${consciousnessScore}%
-
-        </p>
-
-
-        <h3>
-            ${level}
-        </h3>
-
-
-        <p>
-
-            ${
-                language === "hi"
-
-                ? "यह स्कोर आपके उत्तरों के आधार पर आत्मचिंतन के लिए है।"
-
-                : "This score is based on your answers and is intended for self-reflection."
-            }
-
-        </p>
-
-
-        <hr>
-
-
-        <h2>
-
-            ${
-                language === "hi"
-                ? "आपके उत्तर"
-                : "Your Answers"
-            }
-
-        </h2>
-
-
-        ${createResultExplanations()}
-
-
-        <button onclick="showLanguageHome()">
-
-            ${
-                language === "hi"
-                ? "फिर से शुरू करें"
-                : "Take Assessment Again"
-            }
-
-        </button>
-
-    `;
-
-
-    assessmentActive = false;
-
-
-    if (voiceEnabled) {
-
-        setTimeout(() => {
-
-            speakText(
-
-                language === "hi"
-
-                ? `मूल्यांकन पूरा हुआ। आपका चेतना स्कोर ${consciousnessScore} प्रतिशत है। ${level}।`
-
-                : `Assessment completed. Your Consciousness Score is ${consciousnessScore} percent. ${level}.`
-
-            );
-
-        }, 500);
-    }
-}
-
-
-// =====================================================
-// RESULT EXPLANATIONS
-// =====================================================
-
-function createResultExplanations() {
-
-    const language =
-        selectedLanguage;
-
-
-    let html = "";
-
-
-    for (
-        let i = 0;
-        i < questions.length;
-        i++
-    ) {
-
-        const question =
-            questions[i];
-
-
-        const answer =
-            answers[i];
-
-
-        const option =
-            question.options[language][answer];
-
-
-        const score =
-            question.scores[answer];
-
-
-        let explanation = "";
-
-
-        // Q5 explanations
-        if (
-            question.explanations &&
-            question.explanations[language]
-        ) {
-
-            explanation =
-                question.explanations[language][answer];
-
-        }
-
-        // Generic explanation for questions
-        else {
-
-            if (score > 0) {
-
-                explanation =
-                    language === "hi"
-
-                    ? "इस मूल्यांकन के ढाँचे में यह उत्तर अधिक जागरूक प्रतिक्रिया को दर्शाता है।"
-
-                    : "In this assessment's framework, this response represents a more conscious response.";
-
-            }
-
-            else if (score < 0) {
-
-                explanation =
-                    language === "hi"
-
-                    ? "इस मूल्यांकन के ढाँचे में यह उत्तर कम जागरूक प्रतिक्रिया को दर्शाता है।"
-
-                    : "In this assessment's framework, this response represents a less conscious response.";
-
-            }
-
-            else {
-
-                explanation =
-                    language === "hi"
-
-                    ? "इस उत्तर को तटस्थ अंक दिए गए हैं।"
-
-                    : "This response receives a neutral score.";
-            }
-        }
-
-
-        html += `
-
-            <div class="review-question">
-
-                <h3>
-
+                <h4>
                     ${
-                        language === "hi"
-                        ? `प्रश्न ${i + 1}`
-                        : `Question ${i + 1}`
+                        currentLanguage === "en"
+                            ? "Explanation"
+                            : "व्याख्या"
                     }
-
-                </h3>
-
+                </h4>
 
                 <p>
-                    ${question[language]}
+                    ${escapeHTML(personalExplanation)}
                 </p>
 
+            </div>
 
-                <p>
+        `;
 
-                    <strong>
+    } else {
 
+        const quoteText = q.quote[currentLanguage];
+
+        explanationHTML = `
+
+            <div class="quote-box">
+
+                <div class="quote-text">
+                    “${escapeHTML(quoteText)}”
+                </div>
+
+                <div class="quote-person">
+                    — ${escapeHTML(q.quote.person)}
+                </div>
+
+                <div class="source-box">
+
+                    <span class="source-icon">
+                        🔗
+                    </span>
+
+                    <span>
                         ${
-                            language === "hi"
-                            ? "आपका उत्तर"
-                            : "Your Answer"
+                            currentLanguage === "en"
+                                ? "Source:"
+                                : "स्रोत:"
                         }
+                    </span>
 
-                    </strong>
+                    <a
+                        href="${q.quote.url}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        ${escapeHTML(q.quote.person)} ↗
+                    </a>
 
-                </p>
-
-
-                <p>
-                    ${option}
-                </p>
-
-
-                <p>
-
-                    <strong>
-
-                        ${
-                            language === "hi"
-                            ? "अंक"
-                            : "Score"
-                        }
-
-                        :
-
-                        ${score > 0 ? "+" : ""}${score}
-
-                    </strong>
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-
-                        ${
-                            language === "hi"
-                            ? "क्यों?"
-                            : "Why this score?"
-                        }
-
-                    </strong>
-
-                </p>
-
-
-                <p>
-                    ${explanation}
-                </p>
+                </div>
 
             </div>
 
@@ -1462,45 +1325,388 @@ function createResultExplanations() {
     }
 
 
-    return html;
+    return `
+
+        <div class="review-card ${statusClass}">
+
+            <div class="review-question-number">
+
+                ${
+                    currentLanguage === "en"
+                        ? `Question ${q.id}`
+                        : `प्रश्न ${q.id}`
+                }
+
+            </div>
+
+
+            <h3>
+                ${escapeHTML(t(q.question))}
+            </h3>
+
+
+            <div class="selected-answer">
+
+                <strong>
+                    ${
+                        currentLanguage === "en"
+                            ? "Your Answer:"
+                            : "आपका उत्तर:"
+                    }
+                </strong>
+
+                <span>
+                    ${escapeHTML(selectedText)}
+                </span>
+
+            </div>
+
+
+            <div class="review-status">
+
+                <span class="status-icon">
+                    ${statusIcon}
+                </span>
+
+                <span>
+                    ${statusTitle}
+                </span>
+
+            </div>
+
+
+            <div class="why-box">
+
+                <h4>
+                    ${
+                        isBest
+
+                            ? (
+                                currentLanguage === "en"
+                                    ? "Why this is considered more conscious"
+                                    : "इसे अधिक सचेत विकल्प क्यों माना गया है"
+                            )
+
+                            : (
+                                currentLanguage === "en"
+                                    ? "Why this answer is not considered more conscious"
+                                    : "इस उत्तर को अधिक सचेत विकल्प क्यों नहीं माना गया"
+                            )
+                    }
+                </h4>
+
+                <p>
+                    ${escapeHTML(whyText)}
+                </p>
+
+            </div>
+
+
+            ${
+                !isBest
+
+                    ? `
+
+                        <div class="more-conscious-answer">
+
+                            <strong>
+                                ${
+                                    currentLanguage === "en"
+                                        ? "More Conscious Option:"
+                                        : "अधिक सचेत विकल्प:"
+                                }
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(bestText)}
+                            </span>
+
+                        </div>
+
+                    `
+
+                    : ""
+            }
+
+
+            ${explanationHTML}
+
+        </div>
+
+    `;
 }
 
 
-// =====================================================
-// VOICE
-// =====================================================
+/* =========================================================
+   RESTART
+   ========================================================= */
 
-function speakText(text) {
+function restartAssessment() {
 
-    if (
-        !voiceEnabled ||
-        !("speechSynthesis" in window)
-    ) {
+    currentQuestion = 0;
+
+    answers = Array(questions.length).fill(null);
+
+    renderQuestion();
+
+}
+
+
+/* =========================================================
+   VOICE SYNTHESIS
+   ========================================================= */
+
+function loadVoices() {
+
+    if ("speechSynthesis" in window) {
+
+        voices = speechSynthesis.getVoices();
+
+    }
+}
+
+
+if ("speechSynthesis" in window) {
+
+    speechSynthesis.onvoiceschanged = loadVoices;
+
+    loadVoices();
+
+}
+
+
+function getBestVoice(language) {
+
+    if (!voices.length) return null;
+
+    if (language === "hi") {
+
+        return (
+            voices.find(v =>
+                v.lang &&
+                v.lang.toLowerCase().startsWith("hi")
+            ) || null
+        );
+
+    }
+
+    return (
+        voices.find(v =>
+            v.lang &&
+            v.lang.toLowerCase().startsWith("en")
+        ) || null
+    );
+}
+
+
+function speak(text) {
+
+    if (!voiceMode) return;
+
+    if (!("speechSynthesis" in window)) {
+
+        alert(
+            currentLanguage === "en"
+                ? "Voice synthesis is not supported in this browser."
+                : "इस browser में voice synthesis supported नहीं है।"
+        );
+
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang =
+        currentLanguage === "hi"
+            ? "hi-IN"
+            : "en-US";
+
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    const voice = getBestVoice(currentLanguage);
+
+    if (voice) {
+
+        utterance.voice = voice;
+
+    }
+
+    speechSynthesis.speak(utterance);
+}
+
+
+/* =========================================================
+   VOICE QUESTION
+   ========================================================= */
+
+function speakCurrentQuestion() {
+
+    if (!voiceMode) return;
+
+    const q = questions[currentQuestion];
+
+    let text =
+        t(q.question) + ". ";
+
+    q.options[currentLanguage].forEach((option, index) => {
+
+        text +=
+            `${String.fromCharCode(65 + index)}. ${option}. `;
+
+    });
+
+    text +=
+        currentLanguage === "en"
+            ? "Choose your answer."
+            : "अपना उत्तर चुनें।";
+
+    speak(text);
+}
+
+
+function repeatQuestion() {
+
+    speakCurrentQuestion();
+
+}
+
+
+/* =========================================================
+   VOICE RESULT REVIEW
+   ========================================================= */
+
+function speakCurrentReview() {
+
+    if (!voiceMode) return;
+
+    const q = questions[currentQuestion];
+
+    const selected = answers[currentQuestion];
+
+    if (selected === null) {
+
+        speak(
+            currentLanguage === "en"
+                ? "You have not selected an answer yet."
+                : "आपने अभी उत्तर नहीं चुना है।"
+        );
+
+        return;
+    }
+
+    const selectedText = getOptionText(q, selected);
+
+    const isBest = selected === q.bestOption;
+
+    const text =
+
+        currentLanguage === "en"
+
+            ? `Your answer is ${selectedText}. ${
+                isBest
+                    ? "This is the more conscious option in this assessment."
+                    : "This is not the more conscious option in this assessment."
+              }`
+
+            : `आपका उत्तर है ${selectedText}। ${
+                isBest
+                    ? "यह इस मूल्यांकन में अधिक सचेत विकल्प है।"
+                    : "यह इस मूल्यांकन में अधिक सचेत विकल्प नहीं है।"
+              }`;
+
+    speak(text);
+}
+
+
+/* =========================================================
+   KEYBOARD CONTROLS
+   ========================================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (!voiceMode) return;
+
+    const key = event.key.toLowerCase();
+
+    /* A-E answer */
+
+    const answerMap = {
+        a: 0,
+        b: 1,
+        c: 2,
+        d: 3,
+        e: 4
+    };
+
+    if (answerMap.hasOwnProperty(key)) {
+
+        selectAnswer(answerMap[key]);
+
         return;
     }
 
 
-    window.speechSynthesis.cancel();
+    /* Next */
+
+    if (key === "n") {
+
+        if (answers[currentQuestion] !== null) {
+
+            nextQuestion();
+
+        }
+
+        return;
+    }
 
 
-    const speech =
-        new SpeechSynthesisUtterance(text);
+    /* Previous */
+
+    if (key === "p") {
+
+        previousQuestion();
+
+        return;
+    }
 
 
-    speech.lang =
-        selectedLanguage === "hi"
-        ? "hi-IN"
-        : "en-IN";
+    /* Review */
+
+    if (key === "r") {
+
+        speakCurrentReview();
+
+        return;
+    }
 
 
-    speech.rate = 0.85;
+    /* Repeat */
 
-    speech.pitch = 1;
+    if (event.code === "Space") {
 
-    speech.volume = 1;
+        event.preventDefault();
+
+        repeatQuestion();
+
+        return;
+    }
+
+});
 
 
-    window.speechSynthesis.speak(
-        speech
-    );
-}
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    /*
+       index.html already contains the landing page.
+       The Start button calls showLanguageSelection().
+    */
+
+});
