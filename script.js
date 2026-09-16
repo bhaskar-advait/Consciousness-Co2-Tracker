@@ -230,4 +230,140 @@ function finalSubmit() {
         </p>
 
     `;
+} 
+
+// LANGUAGE SYSTEM
+
+let selectedLanguage = "en";
+let voiceEnabled = false;
+
+
+function selectLanguage(language) {
+
+    if (language === "voice") {
+
+        voiceEnabled = true;
+
+        speakText(
+            "Choose your language. अपनी भाषा चुनें।"
+        );
+
+        showLanguageOptions();
+
+        return;
+    }
+
+    selectedLanguage = language;
+
+    showLanguageHome();
+
+    if (voiceEnabled) {
+
+        if (selectedLanguage === "hi") {
+
+            speakText(
+                "आपने हिन्दी भाषा चुनी है।"
+            );
+
+        } else {
+
+            speakText(
+                "You have selected English."
+            );
+        }
+    }
+}
+
+
+function showLanguageOptions() {
+
+    document.querySelector(".hero").innerHTML = `
+
+        <h2>Choose Your Language</h2>
+
+        <p>अपनी भाषा चुनें</p>
+
+        <button onclick="selectLanguage('en')">
+            English
+        </button>
+
+        <button onclick="selectLanguage('hi')">
+            हिन्दी
+        </button>
+
+    `;
+}
+
+
+function showLanguageHome() {
+
+    if (selectedLanguage === "hi") {
+
+        document.querySelector(".hero").innerHTML = `
+
+            <h2>स्वागत है</h2>
+
+            <p>
+                स्वयं को समझें। अपनी conditioning पर प्रश्न करें।
+                सचेत होकर जिएँ।
+            </p>
+
+            <button onclick="startAssessment()">
+                मूल्यांकन शुरू करें
+            </button>
+
+        `;
+
+    } else {
+
+        document.querySelector(".hero").innerHTML = `
+
+            <h2>Welcome</h2>
+
+            <p>
+                Understand yourself. Question your conditioning.
+                Live consciously.
+            </p>
+
+            <button onclick="startAssessment()">
+                Start Assessment
+            </button>
+
+        `;
+    }
+}
+
+
+// VOICE SYSTEM
+
+function speakText(text) {
+
+    if (!voiceEnabled) {
+        return;
+    }
+
+    if ("speechSynthesis" in window) {
+
+        window.speechSynthesis.cancel();
+
+        let speech = new SpeechSynthesisUtterance(text);
+
+        if (selectedLanguage === "hi") {
+
+            speech.lang = "hi-IN";
+
+        } else {
+
+            speech.lang = "en-IN";
+        }
+
+        speech.rate = 0.9;
+        speech.pitch = 1;
+
+        window.speechSynthesis.speak(speech);
+
+    } else {
+
+        alert("Voice assistance is not supported by this browser.");
+    }
 }
