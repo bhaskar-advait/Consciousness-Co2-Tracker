@@ -129,6 +129,16 @@ const questions = [
             ]
         },
 
+        personalExplanationByOption: {
+            hi: {
+                0: `ऐसे तो आतंकवादी भी सही है, चोर भी सही है, बलात्कारी भी सही है क्योंकि उनकी ज़िंदगी उनकी पसंद है। आतंकवादी भी हिंसा ही कर रहा है, मांस खाने वाला भी हिंसा ही कर रहा है।`
+            },
+
+            en: {
+                0: `By this logic, a terrorist is also right, a thief is also right, and a rapist is also right because it is their life and their choice. A terrorist is also committing violence, and a person who eats meat is also committing violence.`
+            }
+        },
+
         quote: {
             en: "Freedom is to be free of both—firstly others and secondly, and more importantly, yourself.",
             hi: "स्वतंत्रता का अर्थ दूसरों से और उससे भी अधिक महत्वपूर्ण रूप से स्वयं से मुक्त होना है।",
@@ -266,7 +276,6 @@ const questions = [
 
         question: {
             en: "What would you say about people who eat meat and people who, even knowing that something wrong is happening, still remain silent?",
-
             hi: "जो लोग मांस खाते हैं और जो लोग यह जानते हुए भी कि यह गलत हो रहा है, फिर भी चुप रहते हैं—आप उनके बारे में क्या कहना चाहेंगे?"
         },
 
@@ -578,7 +587,6 @@ const questions = [
 
         question: {
             en: "\"Girls are equal to boys.\" Does this sentence show women's empowerment?",
-
             hi: "“लड़कियाँ लड़कों के बराबर हैं।” क्या यह वाक्य महिला सशक्तिकरण को दर्शाता है?"
         },
 
@@ -895,6 +903,8 @@ function renderQuestion() {
 }
 
 
+
+
 /* =========================================================
    ANSWER SELECTION
    ========================================================= */
@@ -924,7 +934,6 @@ function nextQuestion() {
     } else {
 
         finishAssessment();
-
     }
 }
 
@@ -936,7 +945,6 @@ function previousQuestion() {
         currentQuestion--;
 
         renderQuestion();
-
     }
 }
 
@@ -954,9 +962,7 @@ function calculateScore() {
         if (answer !== null) {
 
             total += questions[index].scores[answer];
-
         }
-
     });
 
     return total;
@@ -966,7 +972,6 @@ function calculateScore() {
 function calculatePercentage(score) {
 
     return Math.round((score / 40) * 100);
-
 }
 
 
@@ -978,8 +983,8 @@ function getClassification(percentage) {
             en: "High Awareness",
             hi: "उच्च जागरूकता"
         };
-
     }
+
 
     if (percentage >= 70) {
 
@@ -987,8 +992,8 @@ function getClassification(percentage) {
             en: "Good Awareness",
             hi: "अच्छी जागरूकता"
         };
-
     }
+
 
     if (percentage >= 50) {
 
@@ -996,8 +1001,8 @@ function getClassification(percentage) {
             en: "Some Improvement Needed",
             hi: "थोड़ा सुधार चाहिए"
         };
-
     }
+
 
     if (percentage >= 33) {
 
@@ -1005,8 +1010,8 @@ function getClassification(percentage) {
             en: "Low Awareness",
             hi: "कम जागरूकता"
         };
-
     }
+
 
     if (percentage >= 0) {
 
@@ -1014,8 +1019,8 @@ function getClassification(percentage) {
             en: "Very Low Awareness",
             hi: "बहुत कम जागरूकता"
         };
-
     }
+
 
     return {
         en: "Unconscious",
@@ -1041,11 +1046,16 @@ function finishAssessment() {
         return;
     }
 
+
     const score = calculateScore();
+
     const percentage = calculatePercentage(score);
+
     const classification = getClassification(percentage);
 
+
     renderResult(score, percentage, classification);
+
 
     if (voiceMode) {
 
@@ -1126,14 +1136,22 @@ function renderResult(score, percentage, classification) {
             <div class="answer-review">
 
                 <h2>
+
                     ${
                         currentLanguage === "en"
                             ? "Question-wise Reflection"
                             : "प्रश्नवार Reflection"
                     }
+
                 </h2>
 
-                ${questions.map((q, index) => renderQuestionReview(q, index)).join("")}
+
+                ${questions
+                    .map((q, index) =>
+                        renderQuestionReview(q, index)
+                    )
+                    .join("")
+                }
 
             </div>
 
@@ -1141,11 +1159,13 @@ function renderResult(score, percentage, classification) {
             <div class="final-message">
 
                 <h2>
+
                     ${
                         currentLanguage === "en"
                             ? "Question yourself. Observe yourself. Live consciously."
                             : "स्वयं से प्रश्न करें। स्वयं को देखें। सचेत होकर जिएँ।"
                     }
+
                 </h2>
 
             </div>
@@ -1154,45 +1174,40 @@ function renderResult(score, percentage, classification) {
             <div class="gita-community">
 
                 <h2>
+
                     ${
                         currentLanguage === "en"
                             ? "Want to explore the Gita deeper?"
                             : "गीता को और गहराई से समझना चाहते हैं?"
                     }
+
                 </h2>
 
+
                 <p>
+
                     ${
                         currentLanguage === "en"
                             ? "Join Acharya Prashant's Gita community to know yourself."
                             : "स्वयं को जानने के लिए आचार्य प्रशांत की गीता community से जुड़ें।"
                     }
+
                 </p>
+
 
                 <a
                     href="https://acharyaprashant.org/en/gita/referral?referrerId=2131173a-44bc-4023-a22d-05d8aeb45638"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
+
                     ${
                         currentLanguage === "en"
                             ? "Join Gita Community ↗"
                             : "गीता Community से जुड़ें ↗"
                     }
+
                 </a>
-
-            </div>
-
-
-            <div class="result-actions">
-
-                <button onclick="restartAssessment()">
-                    ${
-                        currentLanguage === "en"
-                            ? "Take Assessment Again"
-                            : "Assessment फिर से करें"
-                    }
-                </button>
 
             </div>
 
@@ -1212,15 +1227,19 @@ function renderQuestionReview(q, index) {
     const isBest = selected === q.bestOption;
 
     const selectedText = getOptionText(q, selected);
+
     const bestText = getOptionText(q, q.bestOption);
+
 
     const statusClass = isBest
         ? "review-correct"
         : "review-wrong";
 
+
     const statusIcon = isBest
         ? "✓"
         : "✕";
+
 
     const statusTitle = isBest
 
@@ -1241,15 +1260,12 @@ function renderQuestionReview(q, index) {
         q.why[currentLanguage][selected];
 
 
+    /* -----------------------------------------------------
+       PERSONAL EXPLANATION + QUOTE
+       ----------------------------------------------------- */
+
     let explanationHTML = "";
 
-
-    /*
-       PERSONAL EXPLANATION
-       If the user supplied a personal explanation for
-       the selected option, ONLY that explanation is shown.
-       No website/source/philosopher is added.
-    */
 
     const personalExplanation =
         q.personalExplanationByOption &&
@@ -1257,67 +1273,32 @@ function renderQuestionReview(q, index) {
         q.personalExplanationByOption[currentLanguage][selected];
 
 
+    /*
+       If a personal explanation exists,
+       show it first.
+    */
+
     if (personalExplanation) {
 
-        explanationHTML = `
+        explanationHTML += `
 
             <div class="personal-explanation">
 
                 <h4>
+
                     ${
                         currentLanguage === "en"
-                            ? "Explanation"
-                            : "व्याख्या"
+                            ? "Bhaskar's Explanation"
+                            : "भास्कर की व्याख्या"
                     }
+
                 </h4>
 
                 <p>
+
                     ${escapeHTML(personalExplanation)}
+
                 </p>
-
-            </div>
-
-        `;
-
-    } else {
-
-        const quoteText = q.quote[currentLanguage];
-
-        explanationHTML = `
-
-            <div class="quote-box">
-
-                <div class="quote-text">
-                    “${escapeHTML(quoteText)}”
-                </div>
-
-                <div class="quote-person">
-                    — ${escapeHTML(q.quote.person)}
-                </div>
-
-                <div class="source-box">
-
-                    <span class="source-icon">
-                        🔗
-                    </span>
-
-                    <span>
-                        ${
-                            currentLanguage === "en"
-                                ? "Source:"
-                                : "स्रोत:"
-                        }
-                    </span>
-
-                    <a
-                        href="${q.quote.url}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        ${escapeHTML(q.quote.person)} ↗
-                    </a>
-
-                </div>
 
             </div>
 
@@ -1325,9 +1306,78 @@ function renderQuestionReview(q, index) {
     }
 
 
+    /*
+       Always show the existing quote and source.
+       This means Q2, Q5 and Q10 will now show:
+
+       1. Bhaskar's Explanation
+       2. Quote
+       3. Source
+
+       Other questions will simply show:
+       Quote + Source
+    */
+
+    const quoteText = q.quote[currentLanguage];
+
+
+    explanationHTML += `
+
+        <div class="quote-box">
+
+            <div class="quote-text">
+
+                “${escapeHTML(quoteText)}”
+
+            </div>
+
+
+            <div class="quote-person">
+
+                — ${escapeHTML(q.quote.person)}
+
+            </div>
+
+
+            <div class="source-box">
+
+                <span class="source-icon">
+                    🔗
+                </span>
+
+
+                <span>
+
+                    ${
+                        currentLanguage === "en"
+                            ? "Source:"
+                            : "स्रोत:"
+                    }
+
+                </span>
+
+
+                <a
+                    href="${q.quote.url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    ${escapeHTML(q.quote.person)} ↗
+
+                </a>
+
+            </div>
+
+        </div>
+
+    `;
+
+
     return `
 
         <div class="review-card ${statusClass}">
+
 
             <div class="review-question-number">
 
@@ -1341,22 +1391,29 @@ function renderQuestionReview(q, index) {
 
 
             <h3>
+
                 ${escapeHTML(t(q.question))}
+
             </h3>
 
 
             <div class="selected-answer">
 
                 <strong>
+
                     ${
                         currentLanguage === "en"
                             ? "Your Answer:"
                             : "आपका उत्तर:"
                     }
+
                 </strong>
 
+
                 <span>
+
                     ${escapeHTML(selectedText)}
+
                 </span>
 
             </div>
@@ -1365,11 +1422,16 @@ function renderQuestionReview(q, index) {
             <div class="review-status">
 
                 <span class="status-icon">
+
                     ${statusIcon}
+
                 </span>
 
+
                 <span>
+
                     ${statusTitle}
+
                 </span>
 
             </div>
@@ -1378,6 +1440,7 @@ function renderQuestionReview(q, index) {
             <div class="why-box">
 
                 <h4>
+
                     ${
                         isBest
 
@@ -1393,10 +1456,14 @@ function renderQuestionReview(q, index) {
                                     : "इस उत्तर को अधिक सचेत विकल्प क्यों नहीं माना गया"
                             )
                     }
+
                 </h4>
 
+
                 <p>
+
                     ${escapeHTML(whyText)}
+
                 </p>
 
             </div>
@@ -1410,15 +1477,20 @@ function renderQuestionReview(q, index) {
                         <div class="more-conscious-answer">
 
                             <strong>
+
                                 ${
                                     currentLanguage === "en"
                                         ? "More Conscious Option:"
                                         : "अधिक सचेत विकल्प:"
                                 }
+
                             </strong>
 
+
                             <span>
+
                                 ${escapeHTML(bestText)}
+
                             </span>
 
                         </div>
@@ -1430,6 +1502,7 @@ function renderQuestionReview(q, index) {
 
 
             ${explanationHTML}
+
 
         </div>
 
@@ -1448,7 +1521,6 @@ function restartAssessment() {
     answers = Array(questions.length).fill(null);
 
     renderQuestion();
-
 }
 
 
@@ -1461,7 +1533,6 @@ function loadVoices() {
     if ("speechSynthesis" in window) {
 
         voices = speechSynthesis.getVoices();
-
     }
 }
 
@@ -1471,7 +1542,6 @@ if ("speechSynthesis" in window) {
     speechSynthesis.onvoiceschanged = loadVoices;
 
     loadVoices();
-
 }
 
 
@@ -1479,22 +1549,27 @@ function getBestVoice(language) {
 
     if (!voices.length) return null;
 
+
     if (language === "hi") {
 
         return (
+
             voices.find(v =>
                 v.lang &&
                 v.lang.toLowerCase().startsWith("hi")
             ) || null
-        );
 
+        );
     }
 
+
     return (
+
         voices.find(v =>
             v.lang &&
             v.lang.toLowerCase().startsWith("en")
         ) || null
+
     );
 }
 
@@ -1503,37 +1578,55 @@ function speak(text) {
 
     if (!voiceMode) return;
 
+
     if (!("speechSynthesis" in window)) {
 
         alert(
+
             currentLanguage === "en"
+
                 ? "Voice synthesis is not supported in this browser."
+
                 : "इस browser में voice synthesis supported नहीं है।"
+
         );
 
         return;
     }
 
+
     speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+
+    const utterance =
+        new SpeechSynthesisUtterance(text);
+
 
     utterance.lang =
+
         currentLanguage === "hi"
+
             ? "hi-IN"
+
             : "en-US";
 
+
     utterance.rate = 0.9;
+
     utterance.pitch = 1;
+
     utterance.volume = 1;
 
-    const voice = getBestVoice(currentLanguage);
+
+    const voice =
+        getBestVoice(currentLanguage);
+
 
     if (voice) {
 
         utterance.voice = voice;
-
     }
+
 
     speechSynthesis.speak(utterance);
 }
@@ -1547,22 +1640,31 @@ function speakCurrentQuestion() {
 
     if (!voiceMode) return;
 
+
     const q = questions[currentQuestion];
+
 
     let text =
         t(q.question) + ". ";
 
-    q.options[currentLanguage].forEach((option, index) => {
 
-        text +=
-            `${String.fromCharCode(65 + index)}. ${option}. `;
+    q.options[currentLanguage].forEach(
+        (option, index) => {
 
-    });
+            text +=
+                `${String.fromCharCode(65 + index)}. ${option}. `;
+        }
+    );
+
 
     text +=
+
         currentLanguage === "en"
+
             ? "Choose your answer."
+
             : "अपना उत्तर चुनें।";
+
 
     speak(text);
 }
@@ -1571,7 +1673,6 @@ function speakCurrentQuestion() {
 function repeatQuestion() {
 
     speakCurrentQuestion();
-
 }
 
 
@@ -1583,24 +1684,35 @@ function speakCurrentReview() {
 
     if (!voiceMode) return;
 
+
     const q = questions[currentQuestion];
 
     const selected = answers[currentQuestion];
 
+
     if (selected === null) {
 
         speak(
+
             currentLanguage === "en"
+
                 ? "You have not selected an answer yet."
+
                 : "आपने अभी उत्तर नहीं चुना है।"
+
         );
 
         return;
     }
 
-    const selectedText = getOptionText(q, selected);
 
-    const isBest = selected === q.bestOption;
+    const selectedText =
+        getOptionText(q, selected);
+
+
+    const isBest =
+        selected === q.bestOption;
+
 
     const text =
 
@@ -1618,6 +1730,7 @@ function speakCurrentReview() {
                     : "यह इस मूल्यांकन में अधिक सचेत विकल्प नहीं है।"
               }`;
 
+
     speak(text);
 }
 
@@ -1626,87 +1739,99 @@ function speakCurrentReview() {
    KEYBOARD CONTROLS
    ========================================================= */
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if (!voiceMode) return;
-
-    const key = event.key.toLowerCase();
-
-    /* A-E answer */
-
-    const answerMap = {
-        a: 0,
-        b: 1,
-        c: 2,
-        d: 3,
-        e: 4
-    };
-
-    if (answerMap.hasOwnProperty(key)) {
-
-        selectAnswer(answerMap[key]);
-
-        return;
-    }
+        if (!voiceMode) return;
 
 
-    /* Next */
+        const key =
+            event.key.toLowerCase();
 
-    if (key === "n") {
 
-        if (answers[currentQuestion] !== null) {
+        /* A-E answer */
 
-            nextQuestion();
+        const answerMap = {
 
+            a: 0,
+            b: 1,
+            c: 2,
+            d: 3,
+            e: 4
+
+        };
+
+
+        if (answerMap.hasOwnProperty(key)) {
+
+            selectAnswer(answerMap[key]);
+
+            return;
         }
 
-        return;
+
+        /* Next */
+
+        if (key === "n") {
+
+            if (answers[currentQuestion] !== null) {
+
+                nextQuestion();
+            }
+
+            return;
+        }
+
+
+        /* Previous */
+
+        if (key === "p") {
+
+            previousQuestion();
+
+            return;
+        }
+
+
+        /* Review */
+
+        if (key === "r") {
+
+            speakCurrentReview();
+
+            return;
+        }
+
+
+        /* Repeat */
+
+        if (event.code === "Space") {
+
+            event.preventDefault();
+
+            repeatQuestion();
+
+            return;
+        }
+
     }
-
-
-    /* Previous */
-
-    if (key === "p") {
-
-        previousQuestion();
-
-        return;
-    }
-
-
-    /* Review */
-
-    if (key === "r") {
-
-        speakCurrentReview();
-
-        return;
-    }
-
-
-    /* Repeat */
-
-    if (event.code === "Space") {
-
-        event.preventDefault();
-
-        repeatQuestion();
-
-        return;
-    }
-
-});
+);
 
 
 /* =========================================================
    INITIAL LOAD
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-    /*
-       index.html already contains the landing page.
-       The Start button calls showLanguageSelection().
-    */
+        /*
+           index.html already contains the landing page.
+           The Start button calls showLanguageSelection().
+        */
 
-});
+    }
+);
+
